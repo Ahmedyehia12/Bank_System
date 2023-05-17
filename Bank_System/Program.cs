@@ -87,54 +87,107 @@ namespace Bank_System
             }
             static void requestLoan(int ssn)
             {
-                Console.WriteLine("Enter Loan number: ");
-                int loanNum = int.Parse(Console.ReadLine());
-                while(!checkLoanNum(loanNum))
-                {
-                    Console.WriteLine("This loan number is already taken, please enter a valid loan number: ");
-                    loanNum = int.Parse(Console.ReadLine());
-                }
-                Console.WriteLine("Enter the branch number: ");
+                displayCustomerBranches(ssn);
+                Console.WriteLine("Enter the branch number you want to request a loan from: ");
                 int branchNum = int.Parse(Console.ReadLine());
-                while (!checkBranchNum(branchNum))
+                while (!checkBranch(ssn))
                 {
                     Console.WriteLine("This branch number is not found in the database, please enter a valid branch number: ");
                     branchNum = int.Parse(Console.ReadLine());
                 }
-                Console.WriteLine("Enter the amount of money you want to loan: ");
-                int amount = int.Parse(Console.ReadLine());
-                // employee id
-                Console.WriteLine("Enter the Assigned Employee's ID: ");
-                int empId = int.Parse(Console.ReadLine());
-                while (!checkId(empId))
-                {
-                    Console.WriteLine("This id is not found in the database, please enter a valid id: ");
-                    empId = int.Parse(Console.ReadLine());
-                }
-                Console.WriteLine("Enter the loan type: ");
+                Console.WriteLine("Enter Loan type:");
                 string type = Console.ReadLine();
-                string state = "pending";
+                Console.WriteLine("Enter Loan amount:");
+                int amount = int.Parse(Console.ReadLine());
+                string loan_state = "pending";
+                int loan_num = getLoanum();
+                int empId = getEmployeeId();
                 string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
-                command.CommandText = "INSERT INTO LOAN VALUES(@LOAN_NUM, @SSN, @BRANCH_NUM, @EMP_ID,@LOAN_TYPE, @LOAN_AMOUNT, @LOAN_STATE)";
-                command.Parameters.AddWithValue("@LOAN_NUM", loanNum);
-                command.Parameters.AddWithValue("@SSN", ssn);
-                command.Parameters.AddWithValue("@BRANCH_NUM", branchNum);
-                command.Parameters.AddWithValue("@EMP_ID", empId);
-                command.Parameters.AddWithValue("@LOAN_TYPE", type);
-                command.Parameters.AddWithValue("@LOAN_AMOUNT", amount);
-                command.Parameters.AddWithValue("@LOAN_STATE", state);
+                command.CommandText = "INSERT INTO LOAN(LOAN_NUM,SSN,BRANCH_NUM,EMP_ID,LOAN_TYPE,LOAN_AMOUNT,LOAN_STATE) VALUES(@loan_num,@ssn,@branchNum,@empId,@type,@amount,@loan_state)";
+                command.Parameters.AddWithValue("@loan_num", loan_num);
+                command.Parameters.AddWithValue("@ssn", ssn);
+                command.Parameters.AddWithValue("@branchNum", branchNum);
+                command.Parameters.AddWithValue("@empId", empId);
+                command.Parameters.AddWithValue("@type", type);
+                command.Parameters.AddWithValue("@amount", amount);
+                command.Parameters.AddWithValue("@loan_state", loan_state);
+
                 command.ExecuteNonQuery();
-                Console.WriteLine("Your loan request has been sent successfully");
+                Console.WriteLine("Loan request sent successfully");
                 connection.Close();
+            }
 
-         
+            static int getLoanum()
+            {
+                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+                SqlCommand command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM LOAN";
+                SqlDataReader reader = command.ExecuteReader();
+                List<int> loanNums = new List<int>();
+                while (reader.Read())
+                {
+                    loanNums.Add(int.Parse(reader["LOAN_NUM"].ToString()));
+                }
+                int max = loanNums.Max();
+                return max + 1;
+              
+            }
+           static bool checkBranch(int ssn)
+            {
+                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+                SqlCommand command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM BRANCH JOIN CUSTOMER ON BRANCH.BRANCH_NUM = CUSTOMER.BRANCH_NUM";
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    if (reader["SSN"].ToString() == ssn.ToString())
+                    {
+                        return true;
+                    }
+                }
+                return false;   
+            }
 
+            static void displayCustomerBranches(int ssn)
+            {
+                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+                SqlCommand command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM CUSTOMER JOIN BRANCH ON CUSTOMER.BRANCH_NUM = BRANCH.BRANCH_NUM JOIN BANK ON BANK.BANK_CODE = BRANCH.BANK_CODE WHERE CUSTOMER.SSN = " + ssn;
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Console.WriteLine("Branch number: " + reader["BRANCH_NUM"].ToString() + "     Bank name:" + reader["BANK_NAME"]);
+                }
+                reader.Close();
+            }
 
+            static int getEmployeeId()
+              { 
+                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+                SqlCommand command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM EMPLOYEE";
+                SqlDataReader reader = command.ExecuteReader();
+                List<int> ids = new List<int>();
+                while (reader.Read())
+                {
+                    ids.Add(int.Parse(reader["EMP_ID"].ToString()));
+                }
+                Random random = new Random();
+                int index = random.Next(ids.Count);
+                return ids[index];
 
-   }
+            }
             static bool checkId(int id)
             {
                 string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
