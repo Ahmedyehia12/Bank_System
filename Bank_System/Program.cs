@@ -37,7 +37,7 @@ namespace Bank_System
 
             static void customer_interface()
             {
-                String connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM;Integrated Security=True";
+                String connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 Console.WriteLine("Enter your SSN: ");
@@ -49,17 +49,95 @@ namespace Bank_System
                 }
                 Console.WriteLine("Welcome to our bank, what do you want to do?");
                 Console.WriteLine("1- Open a new account");
-                Console.WriteLine("2- Close an existing account");
-                Console.WriteLine("3- Withdraw money");
-                Console.WriteLine("4- Deposit money");
-                Console.WriteLine("6-apply for a loan");
+                Console.WriteLine("2-apply for a loan");
+                int choice = int.Parse(Console.ReadLine());
+                if (choice == 1)
+                {
+                    //penAccount(ssn);
+                }
+                else if (choice == 2)
+                {
+                    requestLoan(ssn);
+                }
+               
+               
+ 
                 connection.Close();
 
 
             }
+
+
+            static bool checkLoanNum(int num)
+            {
+                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+                SqlCommand command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM LOAN";
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    if (reader["LOAN_NUM"].ToString() == num.ToString())
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            static void requestLoan(int ssn)
+            {
+                Console.WriteLine("Enter Loan number: ");
+                int loanNum = int.Parse(Console.ReadLine());
+                while(!checkLoanNum(loanNum))
+                {
+                    Console.WriteLine("This loan number is already taken, please enter a valid loan number: ");
+                    loanNum = int.Parse(Console.ReadLine());
+                }
+                Console.WriteLine("Enter the branch number: ");
+                int branchNum = int.Parse(Console.ReadLine());
+                while (!checkBranchNum(branchNum))
+                {
+                    Console.WriteLine("This branch number is not found in the database, please enter a valid branch number: ");
+                    branchNum = int.Parse(Console.ReadLine());
+                }
+                Console.WriteLine("Enter the amount of money you want to loan: ");
+                int amount = int.Parse(Console.ReadLine());
+                // employee id
+                Console.WriteLine("Enter the Assigned Employee's ID: ");
+                int empId = int.Parse(Console.ReadLine());
+                while (!checkId(empId))
+                {
+                    Console.WriteLine("This id is not found in the database, please enter a valid id: ");
+                    empId = int.Parse(Console.ReadLine());
+                }
+                Console.WriteLine("Enter the loan type: ");
+                string type = Console.ReadLine();
+                string state = "pending";
+                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+                SqlCommand command = connection.CreateCommand();
+                command.CommandText = "INSERT INTO LOAN VALUES(@LOAN_NUM, @SSN, @BRANCH_NUM, @EMP_ID,@LOAN_TYPE, @LOAN_AMOUNT, @LOAN_STATE)";
+                command.Parameters.AddWithValue("@LOAN_NUM", loanNum);
+                command.Parameters.AddWithValue("@SSN", ssn);
+                command.Parameters.AddWithValue("@BRANCH_NUM", branchNum);
+                command.Parameters.AddWithValue("@EMP_ID", empId);
+                command.Parameters.AddWithValue("@LOAN_TYPE", type);
+                command.Parameters.AddWithValue("@LOAN_AMOUNT", amount);
+                command.Parameters.AddWithValue("@LOAN_STATE", state);
+                command.ExecuteNonQuery();
+                Console.WriteLine("Your loan request has been sent successfully");
+                connection.Close();
+
+         
+
+
+
+   }
             static bool checkId(int id)
             {
-                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM;Integrated Security=True";
+                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
@@ -67,7 +145,7 @@ namespace Bank_System
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    if (reader["ID"].ToString() == id.ToString())
+                    if (reader["EMP_ID"].ToString() == id.ToString())
                     {
                         return true;
                     }
@@ -88,6 +166,12 @@ namespace Bank_System
                 Console.WriteLine("1- Add a new Customer");
                 Console.WriteLine("2- Update a Customer's data");
                 Console.WriteLine("3-perform operations on loans");
+                int choice = int.Parse(Console.ReadLine());
+                if(choice == 2)
+                {
+                    UpdateCustomerData();
+                    DisplayCustomers();
+                }
             }
             static void adminInterface()
             {
@@ -98,7 +182,7 @@ namespace Bank_System
 
             static void DisplayCustomers()
             {
-                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM;Integrated Security=True";
+                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
@@ -107,22 +191,18 @@ namespace Bank_System
                 while (reader.Read())
                 {
                     Console.WriteLine("SSN: " + reader["SSN"].ToString());
-                    Console.WriteLine("Bank code: " + reader["CODE"].ToString());
-                    Console.WriteLine("Branch number: " + reader["BRANCHNUM"].ToString());
-                    Console.WriteLine("Branch address: " + reader["BRANCHADDRESS"].ToString());
-                    Console.WriteLine("Bank name: " + reader["BANKNAME"].ToString());
+                    Console.WriteLine("Branch number: " + reader["BRANCH_NUM"].ToString());
+                    Console.WriteLine("Name: " + reader["CUSTOMER_NAME"].ToString());
+                    Console.WriteLine("Address: " + reader["CUSTOMER_ADDRESS"].ToString());
+                    Console.WriteLine("Phone: " + reader["CUSTOMER_PHONE"].ToString());
                     Console.WriteLine("--------------------------------------------------");
                 }
                 reader.Close();
                 connection.Close();
             }
-
-
-
-            // function to update customer's data
             static bool CheckSSN(int ssn)
             {
-                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM;Integrated Security=True";
+                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
@@ -137,27 +217,9 @@ namespace Bank_System
                 }
                 return false;
             }
-            static bool checkBankCode(int code)
+           static bool checkBranchNum(int bnum)
             {
-                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM;Integrated Security=True";
-                SqlConnection connection = new SqlConnection(connectionString);
-                connection.Open();
-                SqlCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM BANK";
-                SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    if (reader["CODE"].ToString() == code.ToString())
-                    {
-                        return true;
-                    }
-                }
-                return false;
-            }
-
-            static bool checkBranchNum(int bnum)
-            {
-                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM;Integrated Security=True";
+                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
@@ -165,7 +227,7 @@ namespace Bank_System
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    if (reader["BRANCHNUM"].ToString() == bnum.ToString())
+                    if (reader["BRANCH_NUM"].ToString() == bnum.ToString())
                     {
                         return true;
                     }
@@ -181,79 +243,40 @@ namespace Bank_System
                     Console.WriteLine("This SSN is not found in the database, please enter a valid SSN: ");
                     ssn = int.Parse(Console.ReadLine());
 
-                }
-                Console.WriteLine("Enter the customer's new Bank code , if you dont want to change his current bank just enter the same code: ");
-                string bankCode = Console.ReadLine();
-                while (!checkBankCode(int.Parse(bankCode)))
-                {
-                    Console.WriteLine("This bank code is not found in the database, please enter a valid bank code: ");
-                    bankCode = Console.ReadLine();
-                }
-                Console.WriteLine("Enter the customer's new Branch number , if you dont want to change his current branch just enter the same number: ");
+                } 
+             Console.WriteLine("Enter the customer's new Branch number , if you dont want to change his current branch just enter the same number: ");
                 string branchNum = Console.ReadLine();
                 while (!checkBranchNum(int.Parse(branchNum)))
                 {
                     Console.WriteLine("This branch number is not found in the database, please enter a valid branch number: ");
                     branchNum = Console.ReadLine();
                 }
-                Console.WriteLine("if you want to update the customer's phone number enter 1, if you dont want to update it enter 0: ");
-                int choice = int.Parse(Console.ReadLine());
-                string phoneNum = "";
-                if (choice == 1)
+                Console.WriteLine("Enter customer's new name:");
+                string name = Console.ReadLine();
+                Console.WriteLine("Enter customer's new address:");
+                string address = Console.ReadLine();
+                Console.WriteLine("Enter customer's new phone number:");
+                string phone = Console.ReadLine();
+                if(phone.Length != 11)
                 {
-                    Console.WriteLine("Enter the customer's new phone number: ");
-                    phoneNum = Console.ReadLine();
-                    while (phoneNum.Length != 11)
-                    {
-                        Console.WriteLine("Invalid phone number, please enter a valid phone number: ");
-                        phoneNum = Console.ReadLine();
-                    }
+                    Console.WriteLine("Invalid phone number, please enter a valid phone number:");
+                    phone = Console.ReadLine();
                 }
-                // upadte the customer's data
-                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM;Integrated Security=True";
+                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
-                // get bankaddress from bank code
-                command.CommandText = "SELECT BANKADDRESS FROM BANK WHERE CODE = " + bankCode;
-                SqlDataReader reader = command.ExecuteReader();
-                string bankAddress = "";
-                while (reader.Read())
-                {
-                    bankAddress = reader["BANKADDRESS"].ToString();
-                }
-                reader.Close();
-                // get branch address from branch number
-                command.CommandText = "SELECT BRANCHADDRESS FROM BRANCH WHERE BRANCHNUM = " + branchNum;
-                reader = command.ExecuteReader();
-                string branchAddress = "";
-                while (reader.Read())
-                {
-                    branchAddress = reader["BRANCHADDRESS"].ToString();
-                }
-                reader.Close();
-                // get bank name from bank code
-                command.CommandText = "SELECT BANKNAME FROM BANK WHERE CODE = " + bankCode;
-                reader = command.ExecuteReader();
-                string bankName = "";
-                while (reader.Read())
-                {
-                    bankName = reader["BANKNAME"].ToString();
-                }
-                reader.Close();
-
-                // update the customer's data
-                if (choice == 1)
-                {
-                    command.CommandText = "UPDATE CUSTOMER SET BANKCODE = " + bankCode + ", BRANCHNUM = " + branchNum + ", BANKADDRESS = '" + bankAddress + "', BRANCHADDRESS = '" + branchAddress + "', BANKNAME = '" + bankName + "', PHONENUM = '" + phoneNum + "' WHERE SSN = " + ssn;
-                }
-                else if (choice == 0)
-                {
-                    command.CommandText = "UPDATE CUSTOMER SET BANKCODE = " + bankCode + ", BRANCHNUM = " + branchNum + ", BANKADDRESS = '" + bankAddress + "', BRANCHADDRESS = '" + branchAddress + "', BANKNAME = '" + bankName + "' WHERE SSN = " + ssn;
-                }
-
-                Console.WriteLine("Customer's data updated successfully !");
+                command.CommandText = "UPDATE CUSTOMER SET BRANCH_NUM = @branchNum, CUSTOMER_NAME = @name, CUSTOMER_ADDRESS = @address, CUSTOMER_PHONE = @phone WHERE SSN = @ssn";
+                command.Parameters.AddWithValue("@branchNum", branchNum);
+                command.Parameters.AddWithValue("@name", name);
+                command.Parameters.AddWithValue("@address", address);
+                command.Parameters.AddWithValue("@phone", phone);
+                command.Parameters.AddWithValue("@ssn", ssn);
+                command.ExecuteNonQuery();
+                Console.WriteLine("Customer's data has been updated successfully");
                 connection.Close();
+
+          
             }
 
         }
