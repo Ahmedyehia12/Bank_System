@@ -11,19 +11,36 @@ namespace Bank_System
     {
         static void Main(string[] args)
         {
-            string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM;Integrated Security=True";
+            System.Console.WriteLine("Hello World!");
+
+            var datasource = @"localhost";//your server
+            var database = "BankSystem"; //your database name
+            var username = "SA"; //username of server to connect
+            var password = "MyPassword123#"; //password
+
+            //your connection string 
+            string connectionString = @"Data Source=" + datasource + ";Initial Catalog="
+                        + database + ";Persist Security Info=True;User ID=" + username + ";Password=" + password;
+
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
+            Console.WriteLine("ayhaga wenaby");
             SqlCommand command = connection.CreateCommand();
             command.CommandText = "SELECT * FROM BANK";
             SqlDataReader reader = command.ExecuteReader();
+
             while (reader.Read())
             {
-                Console.WriteLine(reader["CODE"] + " " + reader["BANKADDRESS"] + " " + reader["BANKNAME"]);
+                Console.WriteLine(reader["BANK_CODE"] + " " + reader["BANK_ADDRESS"] + " " + reader["BANK_NAME"]);
             }
             Console.WriteLine("Connection Open ! ");
+
             connection.Close();
             Console.WriteLine("Connection closed ! ");
+            Console.WriteLine("helkkkooooo");
+            Console.ReadLine();
         }
     }
+
+
 }
