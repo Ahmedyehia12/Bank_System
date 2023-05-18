@@ -17,9 +17,7 @@ namespace Bank_System
 
             
 
-            // ---------------------------------------------------------
-            // PROGRAM STARTS HERE
-            // ---------------------------------------------------------
+            
             Console.WriteLine("Welcome to our Bank System Application! \n\nPlease specify your choice: \n1. Sign in. \n2. Sign up.\n");
             int choice = int.Parse(Console.ReadLine());
 
