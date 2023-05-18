@@ -15,7 +15,7 @@ namespace Bank_System
             Loan loan = new Loan();
 
 
-            // adding a line
+            
 
             // ---------------------------------------------------------
             // PROGRAM STARTS HERE
