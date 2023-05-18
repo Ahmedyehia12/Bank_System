@@ -32,11 +32,11 @@ namespace Bank_System
             connection.Open();
             Console.WriteLine("Connection opened!");
 
-            AddCustomer(connection);
+            int maxSSN = GetMaxSSN(connection);
+            int maxBankCode = GetMaxBankCode(connection);
 
-            AddBankBranch(connection);
-
-            AddCustomerToBranch(connection);
+            AddCustomer(connection, maxSSN);
+            AddBankBranch(connection, maxBankCode);
 
             connection.Close();
             Console.WriteLine("Connection closed!");
@@ -44,17 +44,53 @@ namespace Bank_System
             Console.ReadLine();
         }
 
-        static void AddCustomer(SqlConnection connection)
+        static int GetMaxSSN(SqlConnection connection)
+        {
+            int maxSSN = 0;
+
+            SqlCommand commandSSN = connection.CreateCommand();
+            commandSSN.CommandText = "SELECT MAX(SSN) AS MaxSSN FROM CUSTOMER";
+            SqlDataReader reader = commandSSN.ExecuteReader();
+
+            if (reader.Read())
+            {
+                if (!reader.IsDBNull(reader.GetOrdinal("MaxSSN")))
+                {
+                    maxSSN = (int)reader["MaxSSN"];
+                }
+            }
+
+            reader.Close();
+
+            return maxSSN + 1;
+        }
+
+        static int GetMaxBankCode(SqlConnection connection)
+        {
+            int maxBankCode = 0;
+
+            SqlCommand commandBankCode = connection.CreateCommand();
+            commandBankCode.CommandText = "SELECT MAX(BANK_CODE) AS MaxBankCode FROM BANK_BRANCH";
+            SqlDataReader reader = commandBankCode.ExecuteReader();
+
+            if (reader.Read())
+            {
+                if (!reader.IsDBNull(reader.GetOrdinal("MaxBankCode")))
+                {
+                    maxBankCode = (int)reader["MaxBankCode"];
+                }
+            }
+
+            reader.Close();
+
+            return maxBankCode + 1;
+        }
+
+        static void AddCustomer(SqlConnection connection, int ssn)
         {
             Console.WriteLine("*** Add a customer(by employee) ***");
 
             // Get customer details from user as a input
-
-            Console.WriteLine("Enter customer SSN:");
-            string ssn = Console.ReadLine();
-
-            Console.WriteLine("Enter customer branch#:");
-            string branchNum = Console.ReadLine();
 
             Console.WriteLine("Enter customer name:");
             string name = Console.ReadLine();
@@ -68,9 +104,8 @@ namespace Bank_System
             // Insert customer into the database
 
             SqlCommand command = connection.CreateCommand();
-            command.CommandText = "INSERT INTO CUSTOMER (SSN, BRANCH_NUM, CUSTOMER_NAME, CUSTOMER_PHONE, CUSTOMER_ADDRESS) VALUES (@SSN, @BRANCH_NUM, @CUSTOMER_NAME, @CUSTOMER_PHONE, @CUSTOMER_ADDRESS)";
+            command.CommandText = "INSERT INTO CUSTOMER (SSN, CUSTOMER_NAME, CUSTOMER_PHONE, CUSTOMER_ADDRESS) VALUES (@SSN, @CUSTOMER_NAME, @CUSTOMER_PHONE, @CUSTOMER_ADDRESS)";
             command.Parameters.AddWithValue("@SSN", ssn);
-            command.Parameters.AddWithValue("@BRANCH_NUM", branchNum);
             command.Parameters.AddWithValue("@CUSTOMER_NAME", name);
             command.Parameters.AddWithValue("@CUSTOMER_PHONE", phone);
             command.Parameters.AddWithValue("@CUSTOMER_ADDRESS", address);
@@ -81,20 +116,11 @@ namespace Bank_System
             Console.WriteLine("--------------------");
         }
 
-        static void AddBankBranch(SqlConnection connection)
+        static void AddBankBranch(SqlConnection connection, int bankCode)
         {
             Console.WriteLine("*** Add bank branch(by admin) ***");
 
             // Get bank branch details from user as a input
-
-            Console.WriteLine("Enter bank name:");
-            string bankName = Console.ReadLine();
-
-            Console.WriteLine("Enter bank code:");
-            string bankCode = Console.ReadLine();
-
-            Console.WriteLine("Enter bank address:");
-            string bankAddress = Console.ReadLine();
 
             Console.WriteLine("Enter branch number:");
             int branchNum = Convert.ToInt32(Console.ReadLine());
@@ -102,56 +128,18 @@ namespace Bank_System
             Console.WriteLine("Enter branch address:");
             string branchAddress = Console.ReadLine();
 
-            // Insert bank into the database
-
-            SqlCommand bank_command = connection.CreateCommand();
-            bank_command.CommandText = "INSERT INTO BANK (BANK_NAME, BANK_CODE, BANK_ADDRESS) " +
-                "VALUES (@BANK_NAME, @BANK_CODE, @BANK_ADDRESS)";
-            bank_command.Parameters.AddWithValue("@BANK_NAME", bankName);
-            bank_command.Parameters.AddWithValue("@BANK_CODE", bankCode);
-            bank_command.Parameters.AddWithValue("@BANK_ADDRESS", bankAddress);
-
-            bank_command.ExecuteNonQuery();
-
             // Insert branch into the database
 
-            SqlCommand branch_command = connection.CreateCommand();
-            branch_command.CommandText = "INSERT INTO BRANCH (BANK_CODE, BRANCH_NUM, BRANCH_ADDRESS) " +
-                "VALUES (@BANK_CODE, @BRANCH_NUM, @BRANCH_ADDRESS)";
-            branch_command.Parameters.AddWithValue("@BANK_CODE", bankCode);
-            branch_command.Parameters.AddWithValue("@BRANCH_NUM", branchNum);
-            branch_command.Parameters.AddWithValue("@BRANCH_ADDRESS", branchAddress);
-
-            branch_command.ExecuteNonQuery();
-
-            Console.WriteLine("Bank branch added successfully!");
-            Console.WriteLine("--------------------");
-        }
-
-        static void AddCustomerToBranch(SqlConnection connection)
-        {
-            Console.WriteLine("*** Add Customer to Branch ***");
-
-            // Get customer SSN from user as a input
-
-            Console.WriteLine("Enter customer SSN:");
-            string ssn = Console.ReadLine();
-
-            // Get branch number from user as a input
-
-            Console.WriteLine("Enter branch number:");
-            int branchNum = Convert.ToInt32(Console.ReadLine());
-
-            // Insert into the database
-
             SqlCommand command = connection.CreateCommand();
-            command.CommandText = "INSERT INTO SERVES (SSN, BRANCH_NUM) VALUES (@SSN, @BRANCH_NUM)";
-            command.Parameters.AddWithValue("@SSN", ssn);
+            command.CommandText = "INSERT INTO BRANCH (BANK_CODE, BRANCH_NUM, BRANCH_ADDRESS) " +
+                "VALUES (@BANK_CODE, @BRANCH_NUM, @BRANCH_ADDRESS)";
+            command.Parameters.AddWithValue("@BANK_CODE", bankCode);
             command.Parameters.AddWithValue("@BRANCH_NUM", branchNum);
+            command.Parameters.AddWithValue("@BRANCH_ADDRESS", branchAddress);
 
             command.ExecuteNonQuery();
 
-            Console.WriteLine("Customer added to branch successfully!");
+            Console.WriteLine("Bank branch added successfully!");
             Console.WriteLine("--------------------");
         }
     }
