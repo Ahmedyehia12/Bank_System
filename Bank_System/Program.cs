@@ -12,6 +12,8 @@ namespace Bank_System
     {
         static void Main(string[] args)
         {
+            Loan loan = new Loan();
+
 
             // ---------------------------------------------------------
             // PROGRAM STARTS HERE
@@ -75,22 +77,23 @@ namespace Bank_System
                     ssn = int.Parse(Console.ReadLine());
                 }
                 Console.WriteLine("Welcome to our bank, what do you want to do?");
-                Console.WriteLine("1- Open a new account");
-                Console.WriteLine("2-apply for a loan");
+                Console.WriteLine("1- Apply for a loan");
                 int choice = int.Parse(Console.ReadLine());
-                if (choice == 1)
+                while (choice != 1 && choice != 2)
                 {
-                    //OpenAccount(ssn);
+                    Console.WriteLine("Invalid choice, please enter a valid choice: ");
+                    choice = int.Parse(Console.ReadLine());
                 }
-                else if (choice == 2)
-                {
-                    requestLoan(ssn);
-                }
+                
+                requestLoan(ssn);
+               
             }
 
             static void employeeInterface()
             {
-                Console.WriteLine("enter your id :");
+                string connectionString = @"Data Source=" + @"localhost;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= SA;Password= MyPassword123#";
+                SqlConnection connection = new SqlConnection(connectionString);
+                Console.WriteLine("Enter your id:");
                 int id = int.Parse(Console.ReadLine());
                 while (!checkId(id))
                 {
@@ -100,19 +103,65 @@ namespace Bank_System
                 Console.WriteLine("Welcome to our bank, what do you want to do?");
                 Console.WriteLine("1- Add a new Customer");
                 Console.WriteLine("2- Update a Customer's data");
-                Console.WriteLine("3-perform operations on loans");
                 int choice = int.Parse(Console.ReadLine());
-                if (choice == 2)
+                while (choice != 1 && choice != 2)
+                {
+                    Console.WriteLine("Invalid choice, please enter a valid choice: ");
+                    choice = int.Parse(Console.ReadLine());
+                }
+                if (choice == 1)
+                {
+                    AddCustomer(connection);
+                }
+                else
                 {
                     UpdateCustomerData();
                     DisplayCustomers();
                 }
             }
+
             static void adminInterface()
             {
+                string connectionString = @"Data Source=" + @"localhost;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= SA;Password= MyPassword123#";
+                SqlConnection connection = new SqlConnection(connectionString);
                 Console.WriteLine("Welcome to our bank, what do you want to do?");
                 Console.WriteLine("1- Add a new Bank");
                 Console.WriteLine("2- Add a new Branch");
+                Console.WriteLine("3- Display list of Customers");
+                Console.WriteLine("4- Display list of Loans");
+                Console.WriteLine("5- Display list of Loans with Customer and Empolyee Names");
+
+                int choice = int.Parse(Console.ReadLine());
+                while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5)
+                {
+                    Console.WriteLine("Invalid choice, please enter a valid choice: ");
+                    choice = int.Parse(Console.ReadLine());
+                }
+                if (choice == 1)
+                {
+                    int code = GetMaxBankCode();
+                    Console.WriteLine("Please enter Bank Address: ");
+                    string address = Console.ReadLine();
+                    Console.WriteLine("Please enter Bank Name: ");
+                    string name = Console.ReadLine();
+                    AddBank(code,address, name);
+                }
+                else if (choice == 2)
+                {
+                    AddBankBranch(connection);
+                }
+                else if (choice == 3)
+                {
+                    DisplayALLCustomers();
+                }
+                else if (choice == 4)
+                {
+                    DisplayLoansForEmployee();
+                }
+                else
+                {
+                    DisplayLoanForAdmin();
+                }
             }
 
 
@@ -123,7 +172,7 @@ namespace Bank_System
             // ---------------------------------------------------------
             static void DisplayCustomers()
             {
-                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+                string connectionString = @"Data Source=" + @"localhost;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= SA;Password= MyPassword123#";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
@@ -143,7 +192,7 @@ namespace Bank_System
 
             static bool CheckSSN(int ssn)
             {
-                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+                string connectionString = @"Data Source=" + @"localhost;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= SA;Password= MyPassword123#";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
@@ -181,7 +230,7 @@ namespace Bank_System
                     Console.WriteLine("Invalid phone number, please enter a valid phone number:");
                     phone = Console.ReadLine();
                 }
-                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+                string connectionString = @"Data Source=" + @"localhost;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= SA;Password= MyPassword123#";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
@@ -196,12 +245,9 @@ namespace Bank_System
                 connection.Close();
             }
 
-
-
-
             static bool checkId(int id)
             {
-                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+                string connectionString = @"Data Source=" + @"localhost;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= SA;Password= MyPassword123#";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
@@ -249,14 +295,6 @@ namespace Bank_System
             static void customerSignUp()
             {
 
-                Console.WriteLine("Enter the branch number: ");
-                int branchNum = int.Parse(Console.ReadLine());
-                while (!checkBranchNum(branchNum))
-                {
-                    Console.WriteLine("This branch number is not found in the database, please enter a valid branch number: ");
-                    branchNum = int.Parse(Console.ReadLine());
-                }
-
                 Console.WriteLine("Enter your name: ");
                 string name = Console.ReadLine();
 
@@ -290,9 +328,8 @@ namespace Bank_System
                 SqlConnection connection2 = new SqlConnection(connectionString);
                 connection2.Open();
                 SqlCommand command = connection2.CreateCommand();
-                command.CommandText = "INSERT INTO CUSTOMER VALUES(@SSN, @BRANCH_NUM, @CUSTOMER_NAME, @CUSTOMER_ADDRESS, @CUSTOMER_PHONE)";
+                command.CommandText = "INSERT INTO CUSTOMER VALUES(@SSN, @CUSTOMER_NAME, @CUSTOMER_ADDRESS, @CUSTOMER_PHONE)";
                 command.Parameters.AddWithValue("@SSN", SSN);
-                command.Parameters.AddWithValue("@BRANCH_NUM", branchNum);
                 command.Parameters.AddWithValue("@CUSTOMER_NAME", name);
                 command.Parameters.AddWithValue("@CUSTOMER_ADDRESS", address);
                 command.Parameters.AddWithValue("@CUSTOMER_PHONE", phone);
@@ -316,15 +353,40 @@ namespace Bank_System
                 accountNum++;
                 connection3.Close();
 
+                string accType;
+                Console.WriteLine("Choose your Account Type:");
+                Console.WriteLine("1- Saving");
+                Console.WriteLine("2- Fixed Deposit");
+                Console.WriteLine("3- Salary");
+                int choice = int.Parse(Console.ReadLine());
+                while(choice != 1 && choice != 2 && choice != 3)
+                {
+                    Console.WriteLine("Invalid choice, please enter a valid choice: ");
+                    choice = int.Parse(Console.ReadLine());
+                }
+                if (choice == 1)
+                {
+                    accType = "Saving";
+                }
+                else if (choice == 2)
+                {
+                    accType = "Fixed Deposit";
+                }
+                else
+                {
+                    accType = "Salary";
+                }
+
 
                 SqlConnection connection4 = new SqlConnection(connectionString);
                 connection4.Open();
 
                 SqlCommand command2 = connection4.CreateCommand();
-                command2.CommandText = "INSERT INTO ACCOUNT VALUES(@ACCOUNT_NUM, @SSN, @BALANCE)";
+                command2.CommandText = "INSERT INTO ACCOUNT VALUES(@ACCOUNT_NUM, @SSN, @BALANCE, @ACCOUNT_TYPE)";
                 command2.Parameters.AddWithValue("@ACCOUNT_NUM", accountNum);
                 command2.Parameters.AddWithValue("@SSN", SSN);
                 command2.Parameters.AddWithValue("@BALANCE", 0.0);
+                command2.Parameters.AddWithValue("@ACCOUNT_TYPE", accType);
                 command2.ExecuteNonQuery();
                 Console.WriteLine("Customer has been added successfully, your ID is " + SSN);
                 Console.WriteLine("Your Account ID is " + accountNum);
@@ -398,7 +460,7 @@ namespace Bank_System
                 {
                     if (loanNum == (int)reader["LOAN_NUM"])
                     {
-                        float amount = (float)reader["LOAN_AMOUNT"];
+                        int amount = (int)reader["LOAN_AMOUNT"];
                         float balance = getBalance(accountNumber);
                         if (amount <= balance * 5)
                         {
@@ -462,7 +524,7 @@ namespace Bank_System
                 {
                     if (accountNum == (int)reader["ACCOUNT_NUM"])
                     {
-                        return (float)reader["BALANCE"];
+                        return (int)reader["BALANCE"];
                     }
                 }
                 connection.Close();
@@ -528,7 +590,7 @@ namespace Bank_System
                 int loan_num = getLoanum();
                 int empId = getEmployeeId();
 
-                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+                string connectionString = @"Data Source=" + @"localhost;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= SA;Password= MyPassword123#";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
@@ -597,7 +659,7 @@ namespace Bank_System
             static bool checkCustomerAccount(int ssn, int accNum)
             {
                 bool check = false;
-                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+                string connectionString = @"Data Source=" + @"localhost;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= SA;Password= MyPassword123#";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
@@ -616,7 +678,7 @@ namespace Bank_System
 
             static bool checkCustomerBranch(int ssn)
             {
-                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+                string connectionString = @"Data Source=" + @"localhost;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= SA;Password= MyPassword123#";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
@@ -634,7 +696,7 @@ namespace Bank_System
 
             static int getLoanum()
             {
-                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+                string connectionString = @"Data Source=" + @"localhost;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= SA;Password= MyPassword123#";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
@@ -681,7 +743,7 @@ namespace Bank_System
             // ---------------------------------------------------------
             static void displayCustomerAccounts(int ssn)
             {
-                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+                string connectionString = @"Data Source=" + @"localhost;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= SA;Password= MyPassword123#";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
@@ -706,8 +768,9 @@ namespace Bank_System
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM CUSTOMER JOIN BRANCH ON CUSTOMER.BRANCH_NUM = BRANCH.BRANCH_NUM JOIN BANK ON BANK.BANK_CODE = BRANCH.BANK_CODE WHERE CUSTOMER.SSN = " + ssn;
+                command.CommandText = "SELECT * FROM SERVES JOIN BRANCH ON SERVES.BRANCH_NUM = BRANCH.BRANCH_NUM JOIN BANK ON BRANCH.BANK_CODE = BANK.BANK_CODE";
                 SqlDataReader reader = command.ExecuteReader();
+                Console.WriteLine("Your branches: ");
                 while (reader.Read())
                 {
                     Console.WriteLine("Branch number: " + reader["BRANCH_NUM"].ToString() + "     Bank name:" + reader["BANK_NAME"]);
@@ -715,8 +778,289 @@ namespace Bank_System
                 reader.Close();
             }
 
-           
+
+            // MARRRRIIIIAAAA
+
+            static int GetMaxBankCode()
+            {
+                int maxBankCode = 0;
+                string connectionString = @"Data Source=" + @"localhost;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= SA;Password= MyPassword123#";
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+                SqlCommand commandBankCode = connection.CreateCommand();
+                commandBankCode.CommandText = "SELECT MAX(BANK_CODE) AS MaxBankCode FROM BANK";
+                SqlDataReader reader = commandBankCode.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    if (!reader.IsDBNull(reader.GetOrdinal("MaxBankCode")))
+                    {
+                        maxBankCode = (int)reader["MaxBankCode"];
+                    }
+                }
+
+                reader.Close();
+                connection.Close();
+
+                return maxBankCode + 1;
+            }
+
+
+            static int GetMaxSSN(SqlConnection connection)
+            {
+                int maxSSN = 0;
+                connection.Open();
+                SqlCommand commandSSN = connection.CreateCommand();
+                commandSSN.CommandText = "SELECT MAX(SSN) AS MaxSSN FROM CUSTOMER";
+                SqlDataReader reader = commandSSN.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    if (!reader.IsDBNull(reader.GetOrdinal("MaxSSN")))
+                    {
+                        maxSSN = (int)reader["MaxSSN"];
+                    }
+                }
+
+                reader.Close();
+                connection.Close();
+
+                return maxSSN + 1;
+            }
+
+            static void AddCustomer(SqlConnection connection)
+            {
+                Console.WriteLine("*** Add a customer(by employee) ***");
+
+                // Get customer details from user as a input
+
+                Console.WriteLine("Enter customer name:");
+                string name = Console.ReadLine();
+
+                Console.WriteLine("Enter customer phone:");
+                string phone = Console.ReadLine();
+
+                Console.WriteLine("Enter customer address:");
+                string address = Console.ReadLine();
+
+                // Insert customer into the database
+                int ssn = GetMaxSSN(connection);
+                connection.Open();
+                SqlCommand command = connection.CreateCommand();
+                command.CommandText = "INSERT INTO CUSTOMER (SSN, CUSTOMER_NAME, CUSTOMER_PHONE, CUSTOMER_ADDRESS) VALUES (@SSN, @CUSTOMER_NAME, @CUSTOMER_PHONE, @CUSTOMER_ADDRESS)";
+                command.Parameters.AddWithValue("@SSN", ssn);
+                command.Parameters.AddWithValue("@CUSTOMER_NAME", name);
+                command.Parameters.AddWithValue("@CUSTOMER_PHONE", phone);
+                command.Parameters.AddWithValue("@CUSTOMER_ADDRESS", address);
+
+                command.ExecuteNonQuery();
+
+                Console.WriteLine("Customer added successfully!");
+                Console.WriteLine("--------------------");
+                connection.Close();
+            }
+
+            static void AddBankBranch(SqlConnection connection)
+            {
+                Console.WriteLine("*** Add bank branch(by admin) ***");
+
+                // Get bank branch details from user as a input
+                Console.WriteLine("Enter bank code:");
+                int bankCode = Convert.ToInt32(Console.ReadLine());
+
+                int branchNum = getBranchNum();
+                
+
+                Console.WriteLine("Enter branch address:");
+                string branchAddress = Console.ReadLine();
+
+
+                // Insert branch into the database
+                connection.Open();
+
+                SqlCommand command = connection.CreateCommand();
+                command.CommandText = "INSERT INTO BRANCH (BANK_CODE, BRANCH_NUM, BRANCH_ADDRESS) " +
+                    "VALUES (@BANK_CODE, @BRANCH_NUM, @BRANCH_ADDRESS)";
+                command.Parameters.AddWithValue("@BANK_CODE", bankCode);
+                command.Parameters.AddWithValue("@BRANCH_NUM", branchNum);
+                command.Parameters.AddWithValue("@BRANCH_ADDRESS", branchAddress);
+
+                command.ExecuteNonQuery();
+
+                Console.WriteLine("Bank branch added successfully!");
+                Console.WriteLine("--------------------");
+                connection.Close();
+            }
+
+            static int getBranchNum()
+            {
+                string connectionString = @"Data Source=" + @"localhost;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= SA;Password= MyPassword123#";
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+                int branchNum = 0;
+                SqlCommand commandSSN = connection.CreateCommand();
+                commandSSN.CommandText = "SELECT MAX(BRANCH_NUM) AS MaxNum FROM BRANCH";
+                SqlDataReader reader = commandSSN.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    if (!reader.IsDBNull(reader.GetOrdinal("MaxNum")))
+                    {
+                        branchNum = (int)reader["MaxNum"];
+                    }
+                }
+
+                reader.Close();
+                connection.Close();
+
+                return branchNum + 1;
+            }
+
+            // NOOOOOORRRR
+
+            static void DisplayALLCustomers()
+            {
+                string connectionString = @"Data Source=" + @"localhost;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= SA;Password= MyPassword123#";
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+                SqlCommand command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM CUSTOMER";
+                SqlDataReader reader = command.ExecuteReader();
+                Console.WriteLine("SSN" + "\t" + " CUSTOMER_NAME" + "\t" + " CUSTOMER_ADDRESS" + "\t" + " CUSTOMER_PHONE");
+                while (reader.Read())
+                {
+                    Console.WriteLine(reader["SSN"] + "\t\t" + reader["CUSTOMER_NAME"] + "\t\t" + reader["CUSTOMER_ADDRESS"]
+                                      + "\t\t" + reader["CUSTOMER_PHONE"]);
+                }
+                connection.Close();
+                Console.WriteLine("--------------------------------------------------------------------------------");
+                Console.ReadLine();
+            }
+
+            static void DisplayLoansForEmployee()
+            {
+                string connectionString = @"Data Source=" + @"localhost;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= SA;Password= MyPassword123#";
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+                SqlCommand command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM LOAN";
+                SqlDataReader reader = command.ExecuteReader();
+                Console.WriteLine("---------------------------------------------------------------------------");
+                Console.WriteLine("LOAN_NUM " + "\t LOAN_TYPE " + "\t SSN_OF_CUSTOMER " + "\t LOAN_AMOUNT "
+                                  + "\t BRANCH_NUM " + "\t EMP_ID" + "\t LOAN_STATE");
+                Console.WriteLine("---------------------------------------------------------------------------");
+                while (reader.Read())
+                {
+                    Console.WriteLine(reader["LOAN_NUM"] + " \t\t " + reader["LOAN_TYPE"] + " \t\t " + reader["SSN"]
+                                      + " \t\t " + reader["LOAN_AMOUNT"] + " \t\t " + reader["BRANCH_NUM"] + " \t\t " +
+                                      reader["EMP_ID"] + " \t\t " + reader["LOAN_STATE"]);
+                }
+                connection.Close();
+                Console.WriteLine("--------------------------------------------------------------------------------");
+                Console.ReadLine();
+            }
+
         }
+
+        // NOURHAAAN
+
+        public class Loan
+        {
+            public string CustName { get; set; }
+            public string EmpName { get; set; }
+            public decimal LoanAmount { get; set; }
+            public string LoanType { get; set; }
+            public string LoanNum { get; set; }
+        }
+
+        static void AddBank(int code, string address, string name)
+
+        {
+            string connectionString = @"Data Source=" + @"localhost;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= SA;Password= MyPassword123#";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    string query = "INSERT INTO BANK (BANK_CODE, BANK_ADDRESS, BANK_NAME)" +
+                                   "VALUES (@Code, @Address, @Name)";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@Code", code);
+                        command.Parameters.AddWithValue("@Name", name);
+                        command.Parameters.AddWithValue("@Address", address);
+
+                        connection.Open();
+
+                        int rows = command.ExecuteNonQuery();
+                        Console.WriteLine($"Rows affected: {rows}");
+                    }
+                }
+
+                Console.WriteLine("Bank added successfully");
+            }
+
+
+            /**
+             * DisplayLoan() creates a list of Loan objs to
+             * hold the data retrieved from the db
+             */
+
+         
+        static void DisplayLoanForAdmin()
+           {
+                List<Loan> LOAN = new List<Loan>();
+            string connectionString = @"Data Source=" + @"localhost;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= SA;Password= MyPassword123#";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    string query = "SELECT * FROM LOAN JOIN CUSTOMER ON LOAN.SSN = CUSTOMER.SSN JOIN EMPLOYEE ON LOAN.EMP_ID = EMPLOYEE.EMP_ID";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    { //here put Sql instead of var
+                        connection.Open();
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            Loan loan = new Loan
+                            {
+                                //LoanNum = reader["LoanNum"].ToString(),
+                                //possible null reference assignment
+                                LoanNum = reader["LOAN_NUM"]?.ToString(),
+                                LoanType = reader["LOAN_TYPE"]?.ToString(),
+                                LoanAmount = Convert.ToDecimal(reader["LOAN_AMOUNT"] ?? 0),
+                                CustName = reader["CUSTOMER_NAME"]?.ToString(),
+                                EmpName = reader["EMP_NAME"]?.ToString()
+                            };
+
+                            /*
+                             * Add method is a member of the List<T> class
+                             * used to add an element to the end of the list
+                             */
+                            LOAN.Add(loan);
+                        }
+                        
+                        reader.Close();
+                    }
+                }
+
+                if (LOAN.Count == 0)
+                {
+                    Console.WriteLine("No loans found.");
+                    return;
+                }
+
+                Console.WriteLine("Loan List: ");
+                foreach (var loan in LOAN)
+                {
+                    Console.WriteLine($"Loan Number: {loan.LoanNum}");
+                    Console.WriteLine($"Customer Name: {loan.CustName}");
+                    Console.WriteLine($"Employee Name: {loan.EmpName}");
+                    Console.WriteLine($"Loan Type: {loan.LoanType}");
+                    Console.WriteLine($"Loan Amount: {loan.LoanAmount}");
+                    Console.WriteLine("----------");
+                }
+                    Console.ReadLine();
+            }
 
     }
 }
