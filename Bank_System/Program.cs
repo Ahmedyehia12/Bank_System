@@ -67,24 +67,6 @@ namespace Bank_System
 
             }
 
-
-            static bool checkLoanNum(int num)
-            {
-                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
-                SqlConnection connection = new SqlConnection(connectionString);
-                connection.Open();
-                SqlCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM LOAN";
-                SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    if (reader["LOAN_NUM"].ToString() == num.ToString())
-                    {
-                        return false;
-                    }
-                }
-                return true;
-            }
             static void requestLoan(int ssn)
             {
                 Console.WriteLine("Enter Loan type: \n1. Industry Loan.\n2. Commercial Loan. \n3. Personal Loan.");
@@ -120,7 +102,7 @@ namespace Bank_System
                 displayCustomerAccounts(ssn);
                 Console.WriteLine("Enter Account Number for your loan request:");
                 int accountNumber = int.Parse(Console.ReadLine());
-                while (!checkAccount(accountNumber))
+                while (!checkCustomerAccount(ssn , accountNumber))
                 {
                     Console.WriteLine("Invalid account number, please enter a valid one: ");
                     accountNumber = int.Parse(Console.ReadLine());
@@ -157,6 +139,25 @@ namespace Bank_System
                 connection.Close();
                 //loanDecision(ssn, accountNumber);
             }
+          static  bool checkCustomerAccount(int ssn , int accNum)
+            {
+                bool check = false;
+                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+                SqlCommand command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM ACCOUNT WHERE SSN = @ssn AND ACCOUNT_NUM = @accNum";
+                command.Parameters.AddWithValue("@ssn", ssn);
+                command.Parameters.AddWithValue("@accNum", accNum);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    check = true;
+                }
+                connection.Close();
+                return check;
+
+           }
 
 
             static int getLoanum()
@@ -247,6 +248,7 @@ namespace Bank_System
                 SqlCommand command = connection.CreateCommand();
                 command.CommandText = "SELECT * FROM SERVES JOIN BRANCH ON SERVES.BRANCH_NUM = BRANCH.BRANCH_NUM JOIN BANK ON BRANCH.BANK_CODE = BANK.BANK_CODE";
                 SqlDataReader reader = command.ExecuteReader();
+                Console.WriteLine("Your branches: ");
                 while (reader.Read())
                 {
                     Console.WriteLine("Branch number: " + reader["BRANCH_NUM"].ToString() + "     Bank name:" + reader["BANK_NAME"]);
