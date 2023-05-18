@@ -87,6 +87,28 @@ namespace Bank_System
             }
             static void requestLoan(int ssn)
             {
+                Console.WriteLine("Enter Loan type: \n1. Industry Loan.\n2. Commercial Loan. \n3. Personal Loan.");
+                int choice = int.Parse(Console.ReadLine());
+                string type;
+                while (choice != 1 && choice != 2 && choice != 3)
+                {
+                    Console.WriteLine("Invalid choice, please enter a valid choice[1:3]: ");
+                    choice = int.Parse(Console.ReadLine());
+                }
+                if (choice == 1)
+                {
+                    type = "Industry";
+                }
+                else if (choice == 2)
+                {
+                    type = "Commercial";
+
+                }
+                else
+                {
+                    type = "Personal";
+                }
+
                 displayCustomerBranches(ssn);
                 Console.WriteLine("Enter the branch number you want to request a loan from: ");
                 int branchNum = int.Parse(Console.ReadLine());
@@ -95,30 +117,47 @@ namespace Bank_System
                     Console.WriteLine("This branch number is not found in the database, please enter a valid branch number: ");
                     branchNum = int.Parse(Console.ReadLine());
                 }
-                Console.WriteLine("Enter Loan type:");
-                string type = Console.ReadLine();
+                displayCustomerAccounts(ssn);
+                Console.WriteLine("Enter Account Number for your loan request:");
+                int accountNumber = int.Parse(Console.ReadLine());
+                while (!checkAccount(accountNumber))
+                {
+                    Console.WriteLine("Invalid account number, please enter a valid one: ");
+                    accountNumber = int.Parse(Console.ReadLine());
+                }
+
                 Console.WriteLine("Enter Loan amount:");
                 int amount = int.Parse(Console.ReadLine());
-                string loan_state = "pending";
+                while (amount <= 1000)
+                {
+                    Console.WriteLine("Invalid loan amount [minimum = 1000], please enter a valid amount: ");
+                    amount = int.Parse(Console.ReadLine());
+                }
+
+                string loan_state = "PENDING";
                 int loan_num = getLoanum();
                 int empId = getEmployeeId();
+
                 string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
-                command.CommandText = "INSERT INTO LOAN(LOAN_NUM,SSN,BRANCH_NUM,EMP_ID,LOAN_TYPE,LOAN_AMOUNT,LOAN_STATE) VALUES(@loan_num,@ssn,@branchNum,@empId,@type,@amount,@loan_state)";
+                command.CommandText = "INSERT INTO LOAN(LOAN_NUM,SSN,BRANCH_NUM,ACCOUNT_NUM,EMP_ID,LOAN_TYPE,LOAN_AMOUNT,LOAN_STATE) VALUES(@loan_num,@ssn,@branchNum,@accountNumber,@empID,@type,@amount, @loan_state)";
                 command.Parameters.AddWithValue("@loan_num", loan_num);
                 command.Parameters.AddWithValue("@ssn", ssn);
                 command.Parameters.AddWithValue("@branchNum", branchNum);
+                command.Parameters.AddWithValue("@accountNumber", accountNumber);
                 command.Parameters.AddWithValue("@empId", empId);
                 command.Parameters.AddWithValue("@type", type);
                 command.Parameters.AddWithValue("@amount", amount);
                 command.Parameters.AddWithValue("@loan_state", loan_state);
-
+                
                 command.ExecuteNonQuery();
                 Console.WriteLine("Loan request sent successfully");
                 connection.Close();
+                //loanDecision(ssn, accountNumber);
             }
+
 
             static int getLoanum()
             {
@@ -133,9 +172,35 @@ namespace Bank_System
                 {
                     loanNums.Add(int.Parse(reader["LOAN_NUM"].ToString()));
                 }
+          
+                if (loanNums.Count == 0)
+                {
+                    return 1;
+                }
+               
                 int max = loanNums.Max();
                 return max + 1;
               
+            }
+            static void displayCustomerAccounts(int ssn)
+            {
+                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+                SqlCommand command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM ACCOUNT JOIN CUSTOMER ON ACCOUNT.SSN =CUSTOMER.SSN";
+                SqlDataReader reader = command.ExecuteReader();
+                Console.WriteLine("Your accounts: ");
+                while (reader.Read())
+                {
+                    if (reader["SSN"].ToString() == ssn.ToString())
+                    {
+                        Console.WriteLine("ACC NUM :" + reader["ACCOUNT_NUM"].ToString() + "   Account Type:" + reader["ACC_TYPE"]);
+                    }
+                }
+                connection.Close();
+               
+
             }
            static bool checkBranch(int ssn)
             {
@@ -143,7 +208,7 @@ namespace Bank_System
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM BRANCH JOIN CUSTOMER ON BRANCH.BRANCH_NUM = CUSTOMER.BRANCH_NUM";
+                command.CommandText = "SELECT * FROM SERVES";
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -154,6 +219,25 @@ namespace Bank_System
                 }
                 return false;   
             }
+            static bool checkAccount(int accNum) { 
+
+                string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+                SqlCommand command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM ACCOUNT";
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    if ((int)reader["ACCOUNT_NUM"] == accNum)
+                    {
+                        connection.Close();
+                        return true;
+                    }
+                }
+                connection.Close();
+                return false;
+            }
 
             static void displayCustomerBranches(int ssn)
             {
@@ -161,7 +245,7 @@ namespace Bank_System
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM CUSTOMER JOIN BRANCH ON CUSTOMER.BRANCH_NUM = BRANCH.BRANCH_NUM JOIN BANK ON BANK.BANK_CODE = BRANCH.BANK_CODE WHERE CUSTOMER.SSN = " + ssn;
+                command.CommandText = "SELECT * FROM SERVES JOIN BRANCH ON SERVES.BRANCH_NUM = BRANCH.BRANCH_NUM JOIN BANK ON BRANCH.BANK_CODE = BANK.BANK_CODE";
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
