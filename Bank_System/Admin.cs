@@ -54,7 +54,7 @@ namespace Bank_System
         }
         static void DisplayALLCustomers()
         {
-            string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+            string connectionString = "Data Source=localhost;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
             SqlCommand command = connection.CreateCommand();
