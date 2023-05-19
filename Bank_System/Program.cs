@@ -7,14 +7,13 @@ using System.Runtime.Intrinsics.X86;
 using System.Net;
 
 
-
 namespace Bank_System
 {
-    class Program
+
+    partial class Program
     {
         static void Main(string[] args)
         {
-            Loan loan = new Loan();
 
             Console.WriteLine("Welcome to our Bank System Application! \n\nPlease specify your choice: \n1. Sign in. \n2. Sign up.\n");
             int choice = int.Parse(Console.ReadLine());
@@ -35,6 +34,7 @@ namespace Bank_System
 
             static void signIn()
             {
+
                 Console.WriteLine("Signing in as?");
                 Console.WriteLine("1- Customer");
                 Console.WriteLine("2- Employee");
@@ -47,19 +47,23 @@ namespace Bank_System
                 }
                 if (choice == 1)
                 {
+
                     Customer.customerInterface();
                 }
                 else if (choice == 2)
                 {
+
                     Employee.employeeInterface();
                 }
                 else
                 {
+
                     Admin.adminInterface();
                 }
             }
             static void signUp()
             {
+
                 Console.WriteLine("Signing up as?");
                 Console.WriteLine("1- Customer");
                 Console.WriteLine("2- Employee");
@@ -71,13 +75,18 @@ namespace Bank_System
                 }
                 if (choice == 1)
                 {
+
+
                     Customer.customerSignUp();
+
                 }
                 else
                 {
+
                     Employee.employeeSignUp();
                 }
             }
 
+        }
     }
 }

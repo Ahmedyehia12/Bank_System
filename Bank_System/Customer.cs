@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
-using System.Runtime.Intrinsics.X86;
 using System.Net;
+
 namespace Bank_System
 {
-    class Customer
+   public partial class Customer
     {
        public static void customerInterface()
         {
@@ -404,7 +404,7 @@ namespace Bank_System
             }
             return false;
         }
-        static void loanDecision(int accountNumber, int loanNum)
+       public  static void loanDecision(int accountNumber, int loanNum)
         {
             string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
             SqlConnection connection = new SqlConnection(connectionString);

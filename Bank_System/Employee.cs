@@ -8,7 +8,7 @@ using System.Net;
 
 namespace Bank_System
 {
-    class Employee
+    public partial class Employee
     {
        public static void employeeInterface()
         {
@@ -44,7 +44,7 @@ namespace Bank_System
         {
             Console.WriteLine("Enter the customer's SSN: ");
             int ssn = int.Parse(Console.ReadLine());
-            while (!CheckSSN(ssn))
+            while (!Customer.CheckSSN(ssn))
             {
                 Console.WriteLine("This SSN is not found in the database, please enter a valid SSN: ");
                 ssn = int.Parse(Console.ReadLine());

@@ -7,7 +7,7 @@ using System.Runtime.Intrinsics.X86;
 using System.Net;
 namespace Bank_System
 {
-    class Admin
+   public partial class Admin
     {
         public static void adminInterface()
         {
