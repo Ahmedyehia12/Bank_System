@@ -1,6 +1,6 @@
 ﻿namespace BANK_APP_GUI
 {
-    partial class employee_sign_in
+    partial class addBranch
     {
         /// <summary>
         /// Required designer variable.

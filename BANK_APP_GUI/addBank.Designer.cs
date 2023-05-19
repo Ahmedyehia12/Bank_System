@@ -1,6 +1,6 @@
 ﻿namespace BANK_APP_GUI
 {
-    partial class add_customer
+    partial class addBank
     {
         /// <summary>
         /// Required designer variable.

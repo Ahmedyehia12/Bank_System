@@ -15,7 +15,7 @@ namespace BANK_APP_GUI
         // sign up
         private void button1_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -35,7 +35,9 @@ namespace BANK_APP_GUI
         /// <param name="e"></param>
         private void button2_Click(object sender, EventArgs e)
         {
-            
+            var newframe = new signin();
+            newframe.Show();
+            Visible = false;
         }
     }
 }

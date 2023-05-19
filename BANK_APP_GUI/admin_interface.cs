@@ -10,14 +10,24 @@ using System.Windows.Forms;
 
 namespace BANK_APP_GUI
 {
-    public partial class signin : Form
+    public partial class admin_interface : Form
     {
-        public signin()
+        public admin_interface()
         {
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
         {
 
         }
@@ -32,16 +42,24 @@ namespace BANK_APP_GUI
 
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void button4_Click(object sender, EventArgs e)
         {
-            var newframe = new admin_interface();
-            newframe.Show();
-            Visible = false;
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            var newframe = new homePage();
+            var newframe = new signin();
             newframe.Show();
             Visible = false;
         }

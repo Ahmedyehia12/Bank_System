@@ -52,7 +52,7 @@
             label1.BackColor = Color.DarkSlateGray;
             label1.Font = new Font("Corbel", 27.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
             label1.ForeColor = SystemColors.Control;
-            label1.Location = new Point(183, 93);
+            label1.Location = new Point(186, 66);
             label1.Name = "label1";
             label1.Size = new Size(416, 45);
             label1.TabIndex = 1;
@@ -84,7 +84,7 @@
             button2.UseVisualStyleBackColor = false;
             button2.Click += button2_Click;
             // 
-            // Form1
+            // homePage
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -94,7 +94,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(button1);
-            Name = "Form1";
+            Name = "homePage";
             Text = "Home Page";
             Load += Form1_Load;
             ResumeLayout(false);

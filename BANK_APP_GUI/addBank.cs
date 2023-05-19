@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace BANK_APP_GUI
 {
-    public partial class employee_interface : Form
+    public partial class addBank : Form
     {
-        public employee_interface()
+        public addBank()
         {
             InitializeComponent();
         }
