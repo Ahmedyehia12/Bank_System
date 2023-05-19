@@ -54,7 +54,7 @@ namespace Bank_System
         }
         static void DisplayALLCustomers()
         {
-            string connectionString = "Data Source=localhost;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+            string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
             SqlCommand command = connection.CreateCommand();
