@@ -11,7 +11,7 @@ namespace Bank_System
     {
         public static void adminInterface()
         {
-            string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+            string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
             SqlConnection connection = new SqlConnection(connectionString);
             Console.WriteLine("Welcome to our bank, what do you want to do?");
             Console.WriteLine("1- Add a new Bank");
@@ -73,7 +73,7 @@ namespace Bank_System
 
         static void DisplayLoansForEmployee()
         {
-            string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+            string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
             SqlCommand command = connection.CreateCommand();
@@ -105,7 +105,7 @@ namespace Bank_System
        public static void AddBank(int code, string address, string name)
 
         {
-            string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+            string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 string query = "INSERT INTO BANK (BANK_CODE, BANK_ADDRESS, BANK_NAME)" +
@@ -128,7 +128,7 @@ namespace Bank_System
        public static void DisplayLoanForAdmin()
         {
             List<Loan> LOAN = new List<Loan>();
-            string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+            string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -185,7 +185,7 @@ namespace Bank_System
       public static int GetMaxBankCode()
         {
             int maxBankCode = 0;
-            string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+            string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
             SqlCommand commandBankCode = connection.CreateCommand();
@@ -207,7 +207,7 @@ namespace Bank_System
         }
         public static int getBranchNum()
         {
-            string connectionString = "Data Source=DESKTOP-FJPI0T1;Initial Catalog=BANK_SYSTEM_DB;Integrated Security=True";
+            string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
             int branchNum = 0;
