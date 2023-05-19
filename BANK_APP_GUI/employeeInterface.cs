@@ -16,5 +16,39 @@ namespace BANK_APP_GUI
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            updateCustomer updateCustomer = new updateCustomer();
+            updateCustomer.Show();
+            this.Hide();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            addCustomer addCustomer = new addCustomer();
+            addCustomer.Show();
+            this.Hide();
+        }
+
+        private void employeeInterface_Load(object sender, EventArgs e)
+        {
+
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            updateCustomer updateCustomer = new updateCustomer();
+            updateCustomer.Show();
+            this.Hide();
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            addCustomer addCustomer = new addCustomer();
+            addCustomer.Show();
+            this.Hide();
+        }
     }
 }

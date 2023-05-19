@@ -1,7 +1,8 @@
 ﻿namespace BANK_APP_GUI
 {
-    partial class employeeInterface
+    partial class customerInterface
     {
+       
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -29,54 +30,52 @@
         private void InitializeComponent()
         {
             label1 = new Label();
+            label2 = new Label();
             button1 = new Button();
-            button2 = new Button();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(12, 50);
+            label1.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.Location = new Point(12, 44);
             label1.Name = "label1";
-            label1.Size = new Size(423, 25);
+            label1.Size = new Size(407, 23);
             label1.TabIndex = 0;
-            label1.Text = "Welcome To our Bank! What do You want to do?";
+            label1.Text = "Welcome to our Bank ! What do you want to do ?";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.Location = new Point(12, 122);
+            label2.Name = "label2";
+            label2.Size = new Size(117, 23);
+            label2.TabIndex = 1;
+            label2.Text = "Request Loan";
             // 
             // button1
             // 
             button1.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
-            button1.Location = new Point(12, 141);
+            button1.Location = new Point(12, 148);
             button1.Name = "button1";
-            button1.Size = new Size(224, 50);
-            button1.TabIndex = 1;
-            button1.Text = "Update Customer's Data";
+            button1.Size = new Size(117, 44);
+            button1.TabIndex = 2;
+            button1.Text = "Request";
             button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click_1;
+            button1.Click += button1_Click;
             // 
-            // button2
-            // 
-            button2.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
-            button2.Location = new Point(12, 239);
-            button2.Name = "button2";
-            button2.Size = new Size(224, 57);
-            button2.TabIndex = 2;
-            button2.Text = "Add New Customer";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click_1;
-            // 
-            // employeeInterface
+            // customerInterface
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.ButtonShadow;
-            ClientSize = new Size(800, 450);
-            Controls.Add(button2);
+            BackColor = SystemColors.AppWorkspace;
+            ClientSize = new Size(800, 253);
             Controls.Add(button1);
+            Controls.Add(label2);
             Controls.Add(label1);
-            Name = "employeeInterface";
-            Text = "EmployeeInterface";
-            Load += employeeInterface_Load;
+            Name = "customerInterface";
+            Text = "customerInterface";
             ResumeLayout(false);
             PerformLayout();
         }
@@ -84,7 +83,8 @@
         #endregion
 
         private Label label1;
+        private Label label2;
         private Button button1;
-        private Button button2;
+
     }
 }

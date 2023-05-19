@@ -255,7 +255,9 @@ namespace Bank_System
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
             SqlCommand command = connection.CreateCommand();
-            command.CommandText = "SELECT * FROM SERVES JOIN BRANCH ON SERVES.BRANCH_NUM = BRANCH.BRANCH_NUM JOIN BANK ON BRANCH.BANK_CODE = BANK.BANK_CODE";
+            command.CommandText = "SELECT * FROM SERVES , BRANCH WHERE SERVES.SSN = @ssn  AND  SERVES.BRANCH_NUM = BRANCH.BRANCH_NUM AND BRANCH.BANK_CODE = BANK.BANK_CODE";
+            command.Parameters.AddWithValue("@ssn", ssn);
+            connection.Close();
             SqlDataReader reader = command.ExecuteReader();
             Console.WriteLine("Your branches: ");
             while (reader.Read())
