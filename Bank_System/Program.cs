@@ -9,7 +9,6 @@ using System.Net;
 
 namespace Bank_System
 {
-
     partial class Program
     {
         static void Main(string[] args)
@@ -63,7 +62,6 @@ namespace Bank_System
             }
             static void signUp()
             {
-
                 Console.WriteLine("Signing up as?");
                 Console.WriteLine("1- Customer");
                 Console.WriteLine("2- Employee");
@@ -75,14 +73,10 @@ namespace Bank_System
                 }
                 if (choice == 1)
                 {
-
-
                     Customer.customerSignUp();
-
                 }
                 else
                 {
-
                     Employee.employeeSignUp();
                 }
             }
