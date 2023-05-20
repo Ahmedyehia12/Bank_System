@@ -50,7 +50,6 @@ namespace Bank_System
                 ssn = int.Parse(Console.ReadLine());
 
             }
-
             Console.WriteLine("Enter customer's new name:");
             string name = Console.ReadLine();
             Console.WriteLine("Enter customer's new address:");
