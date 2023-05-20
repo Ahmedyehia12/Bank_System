@@ -31,7 +31,7 @@ namespace BANK_APP_GUI
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var newframe = new employeeInterface();
+            var newframe = new employee_signin();
             newframe.Show();
             Visible = false;
         }
