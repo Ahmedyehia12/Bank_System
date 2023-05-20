@@ -63,7 +63,7 @@ namespace BANK_APP_GUI
 
         private void addBank_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void textBox1_TextChanged_1(object sender, EventArgs e)
@@ -99,6 +99,12 @@ namespace BANK_APP_GUI
             connection.Close();
 
             return maxBankCode + 1;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Thank You for using our App!");
+            Close();
         }
     }
 }

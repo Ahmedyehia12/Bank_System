@@ -25,11 +25,7 @@ namespace BANK_APP_GUI
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
-            SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM LOAN", connectionString);
-            DataSet ds = new DataSet();
-            da.Fill(ds, "LOAN");
-            dataGridView1.DataSource = ds.Tables["LOAN"].DefaultView;
+
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -43,6 +39,15 @@ namespace BANK_APP_GUI
         {
             MessageBox.Show("Thank You for using our App!");
             Close();
+        }
+
+        private void displayLoans_Load(object sender, EventArgs e)
+        {
+            string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
+            SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM LOAN", connectionString);
+            DataSet ds = new DataSet();
+            da.Fill(ds, "LOAN");
+            dataGridView1.DataSource = ds.Tables["LOAN"].DefaultView;
         }
     }
 }

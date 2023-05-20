@@ -35,6 +35,7 @@
             button1 = new Button();
             button6 = new Button();
             textBox1 = new TextBox();
+            button2 = new Button();
             SuspendLayout();
             // 
             // label2
@@ -48,7 +49,6 @@
             label2.Size = new Size(172, 45);
             label2.TabIndex = 3;
             label2.Text = "Add Bank";
-            //label2.Click += label2_Click;
             // 
             // textBox2
             // 
@@ -112,12 +112,23 @@
             textBox1.TabIndex = 12;
             textBox1.TextChanged += textBox1_TextChanged_1;
             // 
+            // button2
+            // 
+            button2.Location = new Point(729, 412);
+            button2.Name = "button2";
+            button2.Size = new Size(59, 26);
+            button2.TabIndex = 20;
+            button2.Text = "Exit";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
             // addBank
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.DarkSlateGray;
             ClientSize = new Size(800, 450);
+            Controls.Add(button2);
             Controls.Add(textBox1);
             Controls.Add(button6);
             Controls.Add(button1);
@@ -141,5 +152,6 @@
         private Button button1;
         private Button button6;
         private TextBox textBox1;
+        private Button button2;
     }
 }

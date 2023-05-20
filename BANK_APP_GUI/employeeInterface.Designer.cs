@@ -28,27 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
             button1 = new Button();
             button2 = new Button();
+            label3 = new Label();
+            button6 = new Button();
             SuspendLayout();
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(12, 50);
-            label1.Name = "label1";
-            label1.Size = new Size(423, 25);
-            label1.TabIndex = 0;
-            label1.Text = "Welcome To our Bank! What do You want to do?";
             // 
             // button1
             // 
             button1.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
-            button1.Location = new Point(12, 141);
+            button1.ForeColor = Color.DarkSlateGray;
+            button1.Location = new Point(148, 242);
+            button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
-            button1.Size = new Size(224, 50);
+            button1.Size = new Size(196, 38);
             button1.TabIndex = 1;
             button1.Text = "Update Customer's Data";
             button1.UseVisualStyleBackColor = true;
@@ -57,23 +50,49 @@
             // button2
             // 
             button2.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
-            button2.Location = new Point(12, 239);
+            button2.ForeColor = Color.DarkSlateGray;
+            button2.Location = new Point(454, 242);
+            button2.Margin = new Padding(3, 2, 3, 2);
             button2.Name = "button2";
-            button2.Size = new Size(224, 57);
+            button2.Size = new Size(193, 38);
             button2.TabIndex = 2;
             button2.Text = "Add New Customer";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click_1;
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.BackColor = Color.DarkSlateGray;
+            label3.Font = new Font("Corbel", 27.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            label3.ForeColor = SystemColors.Control;
+            label3.Location = new Point(256, 74);
+            label3.Name = "label3";
+            label3.Size = new Size(260, 45);
+            label3.TabIndex = 12;
+            label3.Text = "Welcome Back!";
+            // 
+            // button6
+            // 
+            button6.Location = new Point(12, 12);
+            button6.Name = "button6";
+            button6.Size = new Size(59, 26);
+            button6.TabIndex = 13;
+            button6.Text = "<-Back";
+            button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
+            // 
             // employeeInterface
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.ButtonShadow;
-            ClientSize = new Size(800, 450);
+            BackColor = Color.DarkSlateGray;
+            ClientSize = new Size(828, 441);
+            Controls.Add(button6);
+            Controls.Add(label3);
             Controls.Add(button2);
             Controls.Add(button1);
-            Controls.Add(label1);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "employeeInterface";
             Text = "EmployeeInterface";
             Load += employeeInterface_Load;
@@ -82,9 +101,9 @@
         }
 
         #endregion
-
-        private Label label1;
         private Button button1;
         private Button button2;
+        private Label label3;
+        private Button button6;
     }
 }

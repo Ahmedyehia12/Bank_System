@@ -24,12 +24,16 @@ namespace BANK_APP_GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            var newframe = new customerSignin();
+            newframe.Show();
+            Visible = false;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            var newframe = new employeeInterface();
+            newframe.Show();
+            Visible = false;
         }
 
         private void button4_Click(object sender, EventArgs e)

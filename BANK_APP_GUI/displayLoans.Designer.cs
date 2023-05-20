@@ -91,6 +91,7 @@
             Controls.Add(label2);
             Name = "displayLoans";
             Text = "Display All Loans";
+            Load += displayLoans_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();

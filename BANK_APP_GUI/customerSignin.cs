@@ -21,7 +21,7 @@ namespace BANK_APP_GUI
         private void button1_Click(object sender, EventArgs e)
         {
             int ssn = Convert.ToInt32(customerSSN.Text);
-            while(CheckSSN(ssn) == false)
+            while (CheckSSN(ssn) == false)
             {
                 MessageBox.Show("Wrong SSN");
                 ssn = Convert.ToInt32(customerSSN.Text);
@@ -46,6 +46,18 @@ namespace BANK_APP_GUI
                 }
             }
             return false;
+        }
+
+        private void customerSSN_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var newframe = new signin();
+            newframe.Show();
+            Visible = false;
         }
     }
 }

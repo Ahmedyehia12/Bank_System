@@ -35,6 +35,7 @@
             label2 = new Label();
             button6 = new Button();
             numericUpDown1 = new NumericUpDown();
+            button2 = new Button();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             SuspendLayout();
             // 
@@ -110,12 +111,23 @@
             numericUpDown1.TabIndex = 16;
             numericUpDown1.ValueChanged += numericUpDown1_ValueChanged;
             // 
+            // button2
+            // 
+            button2.Location = new Point(729, 412);
+            button2.Name = "button2";
+            button2.Size = new Size(59, 26);
+            button2.TabIndex = 20;
+            button2.Text = "Exit";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
             // addBranch
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.DarkSlateGray;
             ClientSize = new Size(800, 450);
+            Controls.Add(button2);
             Controls.Add(numericUpDown1);
             Controls.Add(button6);
             Controls.Add(button1);
@@ -140,5 +152,6 @@
         private Label label2;
         private Button button6;
         private NumericUpDown numericUpDown1;
+        private Button button2;
     }
 }

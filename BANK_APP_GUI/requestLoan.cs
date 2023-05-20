@@ -82,7 +82,7 @@ namespace BANK_APP_GUI
             }
             int Amount = int.Parse(amount.Text);
             string loan_type = loanType.Text;
-            insertLoan(loan_num, ssn, branch_num, account_num, emp_id,loan_type ,Amount,"PENDING");
+            insertLoan(loan_num, ssn, branch_num, account_num, emp_id, loan_type, Amount, "PENDING");
             if (!loanDecision(account_num, loan_num))
             {
                 MessageBox.Show("Your loan request has been rejected");
@@ -93,7 +93,7 @@ namespace BANK_APP_GUI
             Customer.Show();
             this.Hide();
         }
-        public static void insertLoan(int loan_num, int ssn, int branch_num, int account_num, int emp_id,string loan_type , int Amount , string state)
+        public static void insertLoan(int loan_num, int ssn, int branch_num, int account_num, int emp_id, string loan_type, int Amount, string state)
         {
             string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
             SqlConnection connection = new SqlConnection(connectionString);
@@ -257,6 +257,19 @@ namespace BANK_APP_GUI
             int index = random.Next(ids.Count);
             return ids[index];
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Thank You for using our App!");
+            Close();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var newframe = new customerSignin();
+            newframe.Show();
+            Visible = false;
         }
     }
 }

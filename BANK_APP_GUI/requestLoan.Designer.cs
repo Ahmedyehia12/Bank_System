@@ -41,18 +41,22 @@
             button1 = new Button();
             label6 = new Label();
             loanType = new TextBox();
+            button2 = new Button();
+            button6 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             SuspendLayout();
             // 
             // dataGridView1
             // 
+            dataGridView1.BackgroundColor = SystemColors.Control;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(12, 47);
+            dataGridView1.Location = new Point(28, 78);
+            dataGridView1.Margin = new Padding(3, 2, 3, 2);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 29;
-            dataGridView1.Size = new Size(372, 144);
+            dataGridView1.Size = new Size(349, 116);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
@@ -60,9 +64,10 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(12, 21);
+            label1.ForeColor = SystemColors.Control;
+            label1.Location = new Point(28, 47);
             label1.Name = "label1";
-            label1.Size = new Size(121, 23);
+            label1.Size = new Size(104, 19);
             label1.TabIndex = 1;
             label1.Text = "Your Branches";
             // 
@@ -70,37 +75,42 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
-            label2.Location = new Point(12, 211);
+            label2.ForeColor = SystemColors.Control;
+            label2.Location = new Point(187, 255);
             label2.Name = "label2";
-            label2.Size = new Size(132, 23);
+            label2.Size = new Size(112, 19);
             label2.TabIndex = 2;
             label2.Text = "Choose Branch:";
             // 
             // customerBranch
             // 
-            customerBranch.Location = new Point(12, 237);
+            customerBranch.Location = new Point(323, 251);
+            customerBranch.Margin = new Padding(3, 2, 3, 2);
             customerBranch.Name = "customerBranch";
-            customerBranch.Size = new Size(192, 27);
+            customerBranch.Size = new Size(168, 23);
             customerBranch.TabIndex = 3;
             customerBranch.TextChanged += textBox1_TextChanged;
             // 
             // dataGridView2
             // 
+            dataGridView2.BackgroundColor = SystemColors.Control;
             dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Location = new Point(11, 309);
+            dataGridView2.Location = new Point(423, 78);
+            dataGridView2.Margin = new Padding(3, 2, 3, 2);
             dataGridView2.Name = "dataGridView2";
             dataGridView2.RowHeadersWidth = 51;
             dataGridView2.RowTemplate.Height = 29;
-            dataGridView2.Size = new Size(457, 155);
+            dataGridView2.Size = new Size(400, 116);
             dataGridView2.TabIndex = 4;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.Location = new Point(11, 283);
+            label3.ForeColor = SystemColors.Control;
+            label3.Location = new Point(423, 47);
             label3.Name = "label3";
-            label3.Size = new Size(122, 23);
+            label3.Size = new Size(104, 19);
             label3.TabIndex = 5;
             label3.Text = "Your Accounts";
             // 
@@ -108,42 +118,47 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
-            label4.Location = new Point(12, 478);
+            label4.ForeColor = SystemColors.Control;
+            label4.Location = new Point(187, 296);
             label4.Name = "label4";
-            label4.Size = new Size(137, 23);
+            label4.Size = new Size(116, 19);
             label4.TabIndex = 6;
             label4.Text = "Choose Account";
             // 
             // customerAccount
             // 
-            customerAccount.Location = new Point(12, 504);
+            customerAccount.Location = new Point(323, 292);
+            customerAccount.Margin = new Padding(3, 2, 3, 2);
             customerAccount.Name = "customerAccount";
-            customerAccount.Size = new Size(192, 27);
+            customerAccount.Size = new Size(168, 23);
             customerAccount.TabIndex = 7;
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
-            label5.Location = new Point(12, 615);
+            label5.ForeColor = SystemColors.Control;
+            label5.Location = new Point(188, 377);
             label5.Name = "label5";
-            label5.Size = new Size(127, 23);
+            label5.Size = new Size(104, 19);
             label5.TabIndex = 8;
             label5.Text = "Enter Amount:";
             // 
             // amount
             // 
-            amount.Location = new Point(11, 654);
+            amount.Location = new Point(324, 373);
+            amount.Margin = new Padding(3, 2, 3, 2);
             amount.Name = "amount";
-            amount.Size = new Size(193, 27);
+            amount.Size = new Size(169, 23);
             amount.TabIndex = 9;
             // 
             // button1
             // 
             button1.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
-            button1.Location = new Point(289, 673);
+            button1.Location = new Point(335, 443);
+            button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
-            button1.Size = new Size(116, 54);
+            button1.Size = new Size(102, 40);
             button1.TabIndex = 10;
             button1.Text = "Request";
             button1.UseVisualStyleBackColor = true;
@@ -153,24 +168,49 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
-            label6.Location = new Point(11, 549);
+            label6.ForeColor = SystemColors.Control;
+            label6.Location = new Point(188, 336);
             label6.Name = "label6";
-            label6.Size = new Size(138, 23);
+            label6.Size = new Size(115, 19);
             label6.TabIndex = 11;
             label6.Text = "Enter Loan Type";
             // 
             // loanType
             // 
-            loanType.Location = new Point(12, 575);
+            loanType.Location = new Point(324, 332);
+            loanType.Margin = new Padding(3, 2, 3, 2);
             loanType.Name = "loanType";
-            loanType.Size = new Size(192, 27);
+            loanType.Size = new Size(168, 23);
             loanType.TabIndex = 12;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(770, 470);
+            button2.Name = "button2";
+            button2.Size = new Size(59, 26);
+            button2.TabIndex = 20;
+            button2.Text = "Exit";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
+            // button6
+            // 
+            button6.Location = new Point(12, 12);
+            button6.Name = "button6";
+            button6.Size = new Size(59, 26);
+            button6.TabIndex = 21;
+            button6.Text = "<-Back";
+            button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
             // 
             // requestLoan
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 730);
+            BackColor = Color.DarkSlateGray;
+            ClientSize = new Size(841, 508);
+            Controls.Add(button6);
+            Controls.Add(button2);
             Controls.Add(loanType);
             Controls.Add(label6);
             Controls.Add(button1);
@@ -184,6 +224,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(dataGridView1);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "requestLoan";
             Text = "requestLoan";
             Load += requestLoan_Load;
@@ -208,5 +249,7 @@
         private Button button1;
         private Label label6;
         private TextBox loanType;
+        private Button button2;
+        private Button button6;
     }
 }

@@ -89,5 +89,11 @@ namespace BANK_APP_GUI
 
             return branchNum + 1;
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Thank You for using our App!");
+            Close();
+        }
     }
 }

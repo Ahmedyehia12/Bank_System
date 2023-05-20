@@ -18,12 +18,18 @@ namespace BANK_APP_GUI
             InitializeComponent();
             this.ssn = ssn;
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
             requestLoan requestLoan = new requestLoan(ssn);
             requestLoan.Show();
             this.Hide();
-            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var newframe = new signin();
+            newframe.Show();
+            Visible = false;
+        }
     }
 }

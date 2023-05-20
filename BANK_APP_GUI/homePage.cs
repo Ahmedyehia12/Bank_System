@@ -39,5 +39,11 @@ namespace BANK_APP_GUI
             newframe.Show();
             Visible = false;
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Thank You for using our App!");
+            Close();
+        }
     }
 }

@@ -55,12 +55,16 @@ namespace BANK_APP_GUI
 
         private void button4_Click(object sender, EventArgs e)
         {
-
+            var newframe = new displayLoans();
+            newframe.Show();
+            Visible = false;
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-
+            var newframe = new displayCustomerLoans();
+            newframe.Show();
+            Visible = false;
         }
 
         private void button6_Click(object sender, EventArgs e)

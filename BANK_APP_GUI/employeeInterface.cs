@@ -50,5 +50,12 @@ namespace BANK_APP_GUI
             addCustomer.Show();
             this.Hide();
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var newframe = new employee_signin();
+            newframe.Show();
+            this.Hide();
+        }
     }
 }

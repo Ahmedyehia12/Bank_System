@@ -28,63 +28,83 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
             ID_textbox = new TextBox();
-            label2 = new Label();
             signinButton = new Button();
+            label3 = new Label();
+            label1 = new Label();
+            button6 = new Button();
             SuspendLayout();
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(10, 57);
-            label1.Name = "label1";
-            label1.Size = new Size(116, 20);
-            label1.TabIndex = 0;
-            label1.Tag = "Welcome Back!";
-            label1.Text = "Welcome Back!";
-            label1.TextAlign = ContentAlignment.TopCenter;
-            label1.Click += label1_Click;
             // 
             // ID_textbox
             // 
-            ID_textbox.Location = new Point(10, 152);
+            ID_textbox.BackColor = SystemColors.Control;
+            ID_textbox.Location = new Point(300, 163);
+            ID_textbox.Margin = new Padding(3, 2, 3, 2);
             ID_textbox.Name = "ID_textbox";
-            ID_textbox.Size = new Size(265, 27);
+            ID_textbox.Size = new Size(232, 23);
             ID_textbox.TabIndex = 1;
             ID_textbox.TextChanged += ID_textbox_TextChanged;
             // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(10, 119);
-            label2.Name = "label2";
-            label2.Size = new Size(98, 20);
-            label2.TabIndex = 2;
-            label2.Text = "Enter Your ID:";
-            // 
             // signinButton
             // 
-            signinButton.BackColor = SystemColors.ControlDark;
-            signinButton.Location = new Point(10, 245);
+            signinButton.BackColor = SystemColors.Control;
+            signinButton.Font = new Font("Corbel", 15.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            signinButton.ForeColor = Color.DarkSlateGray;
+            signinButton.Location = new Point(283, 258);
+            signinButton.Margin = new Padding(3, 2, 3, 2);
             signinButton.Name = "signinButton";
-            signinButton.Size = new Size(234, 63);
+            signinButton.Size = new Size(98, 43);
             signinButton.TabIndex = 3;
             signinButton.Text = "Sign in!";
             signinButton.UseVisualStyleBackColor = false;
             signinButton.Click += button1_Click;
             // 
-            // Form1
+            // label3
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            label3.AutoSize = true;
+            label3.BackColor = Color.DarkSlateGray;
+            label3.Font = new Font("Corbel", 27.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            label3.ForeColor = SystemColors.Control;
+            label3.Location = new Point(224, 35);
+            label3.Name = "label3";
+            label3.Size = new Size(260, 45);
+            label3.TabIndex = 11;
+            label3.Text = "Welcome Back!";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.ForeColor = SystemColors.Control;
+            label1.Location = new Point(124, 156);
+            label1.Name = "label1";
+            label1.Size = new Size(149, 30);
+            label1.TabIndex = 12;
+            label1.Text = "Enter Your ID:";
+            // 
+            // button6
+            // 
+            button6.Location = new Point(12, 12);
+            button6.Name = "button6";
+            button6.Size = new Size(59, 26);
+            button6.TabIndex = 22;
+            button6.Text = "<-Back";
+            button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
+            // 
+            // employee_signin
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(signinButton);
-            Controls.Add(label2);
-            Controls.Add(ID_textbox);
+            BackColor = Color.DarkSlateGray;
+            ClientSize = new Size(700, 338);
+            Controls.Add(button6);
             Controls.Add(label1);
-            Name = "Form1";
+            Controls.Add(label3);
+            Controls.Add(signinButton);
+            Controls.Add(ID_textbox);
+            Margin = new Padding(3, 2, 3, 2);
+            Name = "employee_signin";
             Text = "Signin";
             Load += Form1_Load;
             ResumeLayout(false);
@@ -92,10 +112,10 @@
         }
 
         #endregion
-
-        private Label label1;
         private TextBox ID_textbox;
-        private Label label2;
         private Button signinButton;
+        private Label label3;
+        private Label label1;
+        private Button button6;
     }
 }

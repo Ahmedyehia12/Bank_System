@@ -21,15 +21,15 @@ namespace BANK_APP_GUI
         private void button1_Click(object sender, EventArgs e)
         {
             int ssn = Convert.ToInt32(customerSSN.Text);
-            while(CheckSSN(ssn) == false)
+            while (CheckSSN(ssn) == false)
             {
                 MessageBox.Show("Wrong SSN");
                 ssn = Convert.ToInt32(customerSSN.Text);
             }
-            string name= newName.Text;
+            string name = newName.Text;
             string address = customerAddress.Text;
             string phone = customerPhone.Text;
-            while(phone.Length != 11)
+            while (phone.Length != 11)
             {
                 MessageBox.Show("Wrong Phone Number");
                 phone = customerPhone.Text;
@@ -49,8 +49,8 @@ namespace BANK_APP_GUI
             employeeInterface employee = new employeeInterface();
             employee.Show();
             this.Hide();
-            
-          }
+
+        }
         public static bool CheckSSN(int ssn)
         {
             string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
@@ -67,6 +67,13 @@ namespace BANK_APP_GUI
                 }
             }
             return false;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var newframe = new employeeInterface();
+            newframe.Show();
+            Visible = false;
         }
     }
 }

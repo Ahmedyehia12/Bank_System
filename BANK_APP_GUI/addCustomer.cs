@@ -27,7 +27,7 @@ namespace BANK_APP_GUI
             string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
             SqlConnection connection = new SqlConnection(connectionString);
             int maxSSN = GetMaxSSN(connection);
-            while(phone.Length != 11 || !phone.All(char.IsDigit))
+            while (phone.Length != 11 || !phone.All(char.IsDigit))
             {
                 MessageBox.Show("Please Enter a Valid Phone Number");
                 phone = customerPhone.Text;
@@ -66,6 +66,19 @@ namespace BANK_APP_GUI
             connection.Close();
 
             return maxSSN + 1;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var newframe = new employeeInterface();
+            newframe.Show();
+            Visible = false;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Thank You for using our App!");
+            Close();
         }
     }
 }

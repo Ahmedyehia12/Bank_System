@@ -90,6 +90,7 @@
             Controls.Add(label2);
             Name = "displayCustomerLoans";
             Text = "Display Loans with Customers & Employees";
+            Load += displayCustomerLoans_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();

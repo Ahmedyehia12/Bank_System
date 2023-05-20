@@ -58,5 +58,12 @@ namespace BANK_APP_GUI
         {
 
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var newframe = new signin();
+            newframe.Show();
+            Visible = false;
+        }
     }
 }
