@@ -43,7 +43,7 @@ namespace Bank_System
             command.ExecuteReader();
             connection.Close();
         }
-        public static float getBalance(int accountNum)
+        public static int getBalance(int accountNum)
         {
             string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
             SqlConnection connection = new SqlConnection(connectionString);
@@ -102,7 +102,7 @@ namespace Bank_System
             displayCustomerBranches(ssn);
             Console.WriteLine("Enter the branch number you want to request a loan from: ");
             int branchNum = int.Parse(Console.ReadLine());
-            while (!checkCustomerBranch(ssn))
+            while (!checkCustomerBranch(ssn , branchNum))
             {
                 Console.WriteLine("This branch number is not found in the database, please enter a valid branch number: ");
                 branchNum = int.Parse(Console.ReadLine());
@@ -165,23 +165,26 @@ namespace Bank_System
             return check;
 
         }
-      public  static bool checkCustomerBranch(int ssn)
+        public static bool checkCustomerBranch(int ssn, int bnum)
         {
             string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
             SqlCommand command = connection.CreateCommand();
-            command.CommandText = "SELECT * FROM SERVES";
+            command.CommandText = "SELECT * FROM SERVES WHERE SERVES.SSN = @ssn and SERVES.BRANCH_NUM = @bnum";
+            command.Parameters.AddWithValue("@ssn", ssn);
+            command.Parameters.AddWithValue("@bnum", bnum);
             SqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            if (reader.Read())
             {
-                if (reader["SSN"].ToString() == ssn.ToString())
-                {
-                    return true;
-                }
+                connection.Close();
+                return true;
             }
+            connection.Close();
             return false;
+        
         }
+       
 
 
 
@@ -234,7 +237,8 @@ namespace Bank_System
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
             SqlCommand command = connection.CreateCommand();
-            command.CommandText = "SELECT * FROM ACCOUNT JOIN CUSTOMER ON ACCOUNT.SSN =CUSTOMER.SSN";
+            command.CommandText = "SELECT * FROM ACCOUNT WHERE ACCOUNT.SSN =@ssn";
+            command.Parameters.AddWithValue("@ssn", ssn);
             SqlDataReader reader = command.ExecuteReader();
             Console.WriteLine("Your accounts: ");
             while (reader.Read())
@@ -255,9 +259,8 @@ namespace Bank_System
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
             SqlCommand command = connection.CreateCommand();
-            command.CommandText = "SELECT * FROM SERVES , BRANCH WHERE SERVES.SSN = @ssn  AND  SERVES.BRANCH_NUM = BRANCH.BRANCH_NUM AND BRANCH.BANK_CODE = BANK.BANK_CODE";
+            command.CommandText = "SELECT * FROM SERVES , BRANCH , BANK WHERE SERVES.SSN = @ssn  AND  SERVES.BRANCH_NUM = BRANCH.BRANCH_NUM AND BRANCH.BANK_CODE = BANK.BANK_CODE";
             command.Parameters.AddWithValue("@ssn", ssn);
-            connection.Close();
             SqlDataReader reader = command.ExecuteReader();
             Console.WriteLine("Your branches: ");
             while (reader.Read())
@@ -265,6 +268,7 @@ namespace Bank_System
                 Console.WriteLine("Branch number: " + reader["BRANCH_NUM"].ToString() + "     Bank name:" + reader["BANK_NAME"]);
             }
             reader.Close();
+            connection.Close();
         }
 
         public static bool checkPhoneNumber(string phone)

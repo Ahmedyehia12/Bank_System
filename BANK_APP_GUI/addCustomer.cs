@@ -42,6 +42,8 @@ namespace BANK_APP_GUI
             command.ExecuteNonQuery();
             connection.Close();
             MessageBox.Show("Customer Added Successfully");
+            employeeInterface employee = new employeeInterface();
+            employee.Show();
             this.Hide();
         }
         public static int GetMaxSSN(SqlConnection connection)

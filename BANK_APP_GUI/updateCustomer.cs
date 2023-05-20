@@ -46,7 +46,10 @@ namespace BANK_APP_GUI
             command.ExecuteNonQuery();
             connection.Close();
             MessageBox.Show("Customer Updated Successfully");
+            employeeInterface employee = new employeeInterface();
+            employee.Show();
             this.Hide();
+            
           }
         public static bool CheckSSN(int ssn)
         {
