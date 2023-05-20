@@ -1,8 +1,8 @@
 namespace BANK_APP_GUI
 {
-    public partial class Form1 : Form
+    public partial class sign_up : Form
     {
-        public Form1()
+        public sign_up()
         {
             InitializeComponent();
         }

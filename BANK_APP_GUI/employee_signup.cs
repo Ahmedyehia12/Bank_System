@@ -10,21 +10,11 @@ using System.Windows.Forms;
 
 namespace BANK_APP_GUI
 {
-    public partial class customer_signup : Form
+    public partial class employee_signup : Form
     {
-        public customer_signup()
+        public employee_signup()
         {
             InitializeComponent();
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

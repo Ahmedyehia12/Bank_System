@@ -1,6 +1,6 @@
 ﻿namespace BANK_APP_GUI
 {
-    partial class Form1
+    partial class sign_up
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,12 +28,59 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            label1 = new Label();
+            button1 = new Button();
+            button2 = new Button();
+            SuspendLayout();
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Calibri", 25F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.Location = new Point(308, 124);
+            label1.Name = "label1";
+            label1.Size = new Size(172, 41);
+            label1.TabIndex = 0;
+            label1.Text = "Sign-Up as:";
+            // 
+            // button1
+            // 
+            button1.Font = new Font("Calibri", 19F, FontStyle.Regular, GraphicsUnit.Point);
+            button1.Location = new Point(190, 249);
+            button1.Name = "button1";
+            button1.Size = new Size(165, 55);
+            button1.TabIndex = 1;
+            button1.Text = "Customer";
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            button2.Font = new Font("Calibri", 19F, FontStyle.Regular, GraphicsUnit.Point);
+            button2.Location = new Point(444, 249);
+            button2.Name = "button2";
+            button2.Size = new Size(165, 55);
+            button2.TabIndex = 2;
+            button2.Text = "Employee";
+            button2.UseVisualStyleBackColor = true;
+            // 
+            // sign_up
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(button2);
+            Controls.Add(button1);
+            Controls.Add(label1);
+            Name = "sign_up";
+            Text = "Sign-Up";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private Label label1;
+        private Button button1;
+        private Button button2;
     }
 }
