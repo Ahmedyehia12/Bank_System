@@ -21,8 +21,9 @@ namespace BANK_APP_GUI
         private void button1_Click(object sender, EventArgs e)
         {
             string name = this.name.Text;
-            int branch_num = Convert.ToInt32(branchNum);
-            string  address = this.Address.Text;
+            string branch = this.branchNum.Text;
+            int branch_num = int.Parse(branch);
+            string address = this.Address.Text;
             string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
@@ -62,6 +63,14 @@ namespace BANK_APP_GUI
             {
 
             }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var form = new sign_up();
+            form.Show();
+            Visible = false;
+
         }
     }
 }

@@ -36,8 +36,8 @@
             branchNum = new TextBox();
             Address = new TextBox();
             label5 = new Label();
-            button2 = new Button();
             button1 = new Button();
+            button6 = new Button();
             SuspendLayout();
             // 
             // label1
@@ -112,22 +112,10 @@
             label5.TabIndex = 7;
             label5.Text = "Welcome to our banking system";
             // 
-            // button2
-            // 
-            button2.Font = new Font("Calibri", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            button2.Location = new Point(296, 416);
-            button2.Margin = new Padding(3, 4, 3, 4);
-            button2.Name = "button2";
-            button2.Size = new Size(98, 41);
-            button2.TabIndex = 12;
-            button2.Text = "Back";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
-            // 
             // button1
             // 
             button1.Font = new Font("Calibri", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            button1.Location = new Point(483, 416);
+            button1.Location = new Point(365, 465);
             button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
             button1.Size = new Size(98, 41);
@@ -136,13 +124,24 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
+            // button6
+            // 
+            button6.Location = new Point(12, 13);
+            button6.Margin = new Padding(3, 4, 3, 4);
+            button6.Name = "button6";
+            button6.Size = new Size(67, 35);
+            button6.TabIndex = 19;
+            button6.Text = "<-Back";
+            button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
+            // 
             // employee_signup
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(914, 600);
+            Controls.Add(button6);
             Controls.Add(button1);
-            Controls.Add(button2);
             Controls.Add(label5);
             Controls.Add(Address);
             Controls.Add(branchNum);
@@ -168,7 +167,7 @@
         private TextBox branchNum;
         private TextBox Address;
         private Label label5;
-        private Button button2;
         private Button button1;
+        private Button button6;
     }
 }

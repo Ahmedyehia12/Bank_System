@@ -15,6 +15,9 @@ namespace BANK_APP_GUI
         // sign up
         private void button1_Click(object sender, EventArgs e)
         {
+            var newframe = new sign_up();
+            newframe.Show();
+            Visible = false;
 
         }
 

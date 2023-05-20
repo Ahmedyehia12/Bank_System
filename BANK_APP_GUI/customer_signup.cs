@@ -55,7 +55,7 @@ namespace BANK_APP_GUI
                 accountType = "Salary";
             }
             string phone = this.phone.Text;
-            while(phone.Length != 11)
+            while (phone.Length != 11)
             {
                 MessageBox.Show("Invalid Phone Number");
                 phone = this.phone.Text;
@@ -86,20 +86,9 @@ namespace BANK_APP_GUI
             command.Parameters.AddWithValue("@CUSTOMER_PHONE", phone);
             command.ExecuteNonQuery();
             connection.Close();
-            SqlConnection connection3 = new SqlConnection(connectionString);
-            connection3.Open();
-
-            SqlCommand command1 = connection3.CreateCommand();
-            command1.CommandText = "SELECT * FROM ACCOUNT";
-            SqlDataReader reader2 = command1.ExecuteReader();
-            int accountNum = 0;
-
-            while (reader2.Read())
-            {
-                accountNum = (int)reader["ACCOUNT_NUM"];
-            }
-            accountNum++;
-            connection3.Close();
+     
+           
+            int accountNum = getAccountNum();
             int balance = 0;
             SqlConnection connection4 = new SqlConnection(connectionString);
             connection4.Open();
@@ -110,10 +99,27 @@ namespace BANK_APP_GUI
             command2.Parameters.AddWithValue("@BALANCE", 0.0);
             command2.Parameters.AddWithValue("@ACCOUNT_TYPE", accountType);
             command2.ExecuteNonQuery();
-            connection3.Close();
+            connection4.Close();
             MessageBox.Show("Information saved\tCustomer signed-up Successfully");
         }
-        
+        public int getAccountNum()
+        {
+            string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
+            SqlConnection connection = new SqlConnection(connectionString);
+            connection.Open();
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = "SELECT * FROM ACCOUNT";
+            SqlDataReader reader = command.ExecuteReader();
+            int accountNum = 0;
+            while (reader.Read())
+            {
+                accountNum = (int)reader["ACCOUNT_NUM"];
+            }
+            accountNum++;
+            connection.Close();
+            return accountNum;
+        }
+
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -132,6 +138,13 @@ namespace BANK_APP_GUI
             {
 
             }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var newframe = new sign_up();
+            newframe.Show();
+            Visible = false;
         }
     }
 }

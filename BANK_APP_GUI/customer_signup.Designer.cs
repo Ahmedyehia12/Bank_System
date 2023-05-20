@@ -39,8 +39,8 @@
             radioButton3 = new RadioButton();
             accountType = new Label();
             button1 = new Button();
-            button2 = new Button();
             label5 = new Label();
+            button6 = new Button();
             SuspendLayout();
             // 
             // label1
@@ -150,7 +150,7 @@
             // button1
             // 
             button1.Font = new Font("Calibri", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            button1.Location = new Point(461, 425);
+            button1.Location = new Point(403, 422);
             button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
             button1.Size = new Size(98, 41);
@@ -158,18 +158,6 @@
             button1.Text = "Sign-Up";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
-            // 
-            // button2
-            // 
-            button2.Font = new Font("Calibri", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            button2.Location = new Point(283, 425);
-            button2.Margin = new Padding(3, 4, 3, 4);
-            button2.Name = "button2";
-            button2.Size = new Size(98, 41);
-            button2.TabIndex = 11;
-            button2.Text = "Back";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
             // 
             // label5
             // 
@@ -182,13 +170,24 @@
             label5.Text = "Welcome to our banking system";
             label5.Click += label5_Click;
             // 
+            // button6
+            // 
+            button6.Location = new Point(12, 13);
+            button6.Margin = new Padding(3, 4, 3, 4);
+            button6.Name = "button6";
+            button6.Size = new Size(67, 35);
+            button6.TabIndex = 19;
+            button6.Text = "<-Back";
+            button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
+            // 
             // customer_signup
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(914, 600);
+            Controls.Add(button6);
             Controls.Add(label5);
-            Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(accountType);
             Controls.Add(radioButton3);
@@ -220,7 +219,7 @@
         private RadioButton radioButton3;
         private Label accountType;
         private Button button1;
-        private Button button2;
         private Label label5;
+        private Button button6;
     }
 }
