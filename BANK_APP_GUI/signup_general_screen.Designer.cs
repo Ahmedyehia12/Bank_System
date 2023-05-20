@@ -37,20 +37,21 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Calibri", 25F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(352, 165);
+            label1.Font = new Font("Corbel", 27.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            label1.ForeColor = SystemColors.Control;
+            label1.Location = new Point(308, 124);
             label1.Name = "label1";
-            label1.Size = new Size(212, 51);
+            label1.Size = new Size(194, 45);
             label1.TabIndex = 0;
-            label1.Text = "Sign-Up as:";
+            label1.Text = "Sign up For";
             // 
             // button1
             // 
             button1.Font = new Font("Calibri", 19F, FontStyle.Regular, GraphicsUnit.Point);
-            button1.Location = new Point(217, 332);
-            button1.Margin = new Padding(3, 4, 3, 4);
+            button1.ForeColor = Color.DarkSlateGray;
+            button1.Location = new Point(190, 249);
             button1.Name = "button1";
-            button1.Size = new Size(189, 73);
+            button1.Size = new Size(165, 55);
             button1.TabIndex = 1;
             button1.Text = "Customer";
             button1.UseVisualStyleBackColor = true;
@@ -59,10 +60,10 @@
             // button2
             // 
             button2.Font = new Font("Calibri", 19F, FontStyle.Regular, GraphicsUnit.Point);
-            button2.Location = new Point(507, 332);
-            button2.Margin = new Padding(3, 4, 3, 4);
+            button2.ForeColor = Color.DarkSlateGray;
+            button2.Location = new Point(444, 249);
             button2.Name = "button2";
-            button2.Size = new Size(189, 73);
+            button2.Size = new Size(165, 55);
             button2.TabIndex = 2;
             button2.Text = "Employee";
             button2.UseVisualStyleBackColor = true;
@@ -70,10 +71,9 @@
             // 
             // button6
             // 
-            button6.Location = new Point(12, 13);
-            button6.Margin = new Padding(3, 4, 3, 4);
+            button6.Location = new Point(10, 10);
             button6.Name = "button6";
-            button6.Size = new Size(67, 35);
+            button6.Size = new Size(59, 26);
             button6.TabIndex = 19;
             button6.Text = "<-Back";
             button6.UseVisualStyleBackColor = true;
@@ -81,14 +81,14 @@
             // 
             // sign_up
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(914, 600);
+            BackColor = Color.DarkSlateGray;
+            ClientSize = new Size(800, 450);
             Controls.Add(button6);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(label1);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "sign_up";
             Text = "Sign-Up";
             Load += sign_up_Load;

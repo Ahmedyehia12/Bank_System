@@ -41,7 +41,7 @@
             label2.BackColor = Color.DarkSlateGray;
             label2.Font = new Font("Corbel", 27.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
             label2.ForeColor = SystemColors.Control;
-            label2.Location = new Point(234, 75);
+            label2.Location = new Point(211, 56);
             label2.Name = "label2";
             label2.Size = new Size(329, 45);
             label2.TabIndex = 10;
@@ -51,7 +51,7 @@
             // 
             dataGridView1.BackgroundColor = SystemColors.ControlLightLight;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(156, 159);
+            dataGridView1.Location = new Point(133, 140);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new Size(506, 233);

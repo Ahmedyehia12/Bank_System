@@ -86,8 +86,8 @@ namespace BANK_APP_GUI
             command.Parameters.AddWithValue("@CUSTOMER_PHONE", phone);
             command.ExecuteNonQuery();
             connection.Close();
-     
-           
+
+
             int accountNum = getAccountNum();
             int balance = 0;
             SqlConnection connection4 = new SqlConnection(connectionString);

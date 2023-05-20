@@ -53,7 +53,7 @@
             button1.ForeColor = Color.DarkSlateGray;
             button1.Location = new Point(88, 248);
             button1.Name = "button1";
-            button1.Size = new Size(143, 45);
+            button1.Size = new Size(153, 45);
             button1.TabIndex = 1;
             button1.Text = "Customer";
             button1.UseVisualStyleBackColor = true;
@@ -65,7 +65,7 @@
             button2.ForeColor = Color.DarkSlateGray;
             button2.Location = new Point(334, 248);
             button2.Name = "button2";
-            button2.Size = new Size(148, 45);
+            button2.Size = new Size(158, 45);
             button2.TabIndex = 2;
             button2.Text = "Empolyee";
             button2.UseVisualStyleBackColor = true;
@@ -77,7 +77,7 @@
             button4.ForeColor = Color.DarkSlateGray;
             button4.Location = new Point(600, 248);
             button4.Name = "button4";
-            button4.Size = new Size(148, 45);
+            button4.Size = new Size(155, 45);
             button4.TabIndex = 4;
             button4.Text = "Admin";
             button4.UseVisualStyleBackColor = true;
