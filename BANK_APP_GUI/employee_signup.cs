@@ -17,6 +17,26 @@ namespace BANK_APP_GUI
         {
             InitializeComponent();
         }
+        public static bool checkBranchNum(int bnum)
+        {
+            string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
+            SqlConnection connection = new SqlConnection(connectionString);
+            connection.Open();
+
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = "SELECT * FROM BRANCH";
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                if (reader["BRANCH_NUM"].ToString() == bnum.ToString())
+                {
+                    connection.Close();
+                    return true;
+                }
+            }
+            connection.Close();
+            return false;
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -27,7 +47,6 @@ namespace BANK_APP_GUI
             string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
-
             SqlCommand commandSSN = connection.CreateCommand();
             commandSSN.CommandText = "SELECT * FROM EMPLOYEE";
             SqlDataReader reader = commandSSN.ExecuteReader();
@@ -70,6 +89,12 @@ namespace BANK_APP_GUI
             var form = new sign_up();
             form.Show();
             Visible = false;
+
+        }
+
+        private void branchNum_TextChanged(object sender, EventArgs e)
+        {
+           
 
         }
     }

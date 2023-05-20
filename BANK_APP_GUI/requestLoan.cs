@@ -69,17 +69,7 @@ namespace BANK_APP_GUI
             int emp_id = getEmployeeId();
             int loan_num = getLoanum();
             int branch_num = int.Parse(customerBranch.Text);
-            while (!checkCustomerBranch(ssn, branch_num))
-            {
-                MessageBox.Show("Please enter a valid branch number");
-                return;
-            }
             int account_num = int.Parse(customerAccount.Text);
-            while (!checkCustomerAccount(ssn, account_num))
-            {
-                MessageBox.Show("Please enter a valid account number");
-                return;
-            }
             int Amount = int.Parse(amount.Text);
             string loan_type = loanType.Text;
             insertLoan(loan_num, ssn, branch_num, account_num, emp_id, loan_type, Amount, "PENDING");
