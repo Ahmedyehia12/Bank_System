@@ -31,6 +31,7 @@
             label2 = new Label();
             dataGridView1 = new DataGridView();
             button6 = new Button();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -67,12 +68,23 @@
             button6.UseVisualStyleBackColor = true;
             button6.Click += button6_Click;
             // 
+            // button1
+            // 
+            button1.Location = new Point(729, 412);
+            button1.Name = "button1";
+            button1.Size = new Size(59, 26);
+            button1.TabIndex = 19;
+            button1.Text = "Exit";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // displayAllCustomers
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.DarkSlateGray;
             ClientSize = new Size(800, 450);
+            Controls.Add(button1);
             Controls.Add(button6);
             Controls.Add(dataGridView1);
             Controls.Add(label2);
@@ -89,5 +101,6 @@
         private Label label2;
         private DataGridView dataGridView1;
         private Button button6;
+        private Button button1;
     }
 }
