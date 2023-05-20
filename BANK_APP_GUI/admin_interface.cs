@@ -34,17 +34,23 @@ namespace BANK_APP_GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            var newframe = new addBank();
+            newframe.Show();
+            Visible = false;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            var newframe = new addBranch();
+            newframe.Show();
+            Visible = false;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-
+            var newframe = new displayAllCustomers();
+            newframe.Show();
+            Visible = false;
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -62,6 +68,11 @@ namespace BANK_APP_GUI
             var newframe = new signin();
             newframe.Show();
             Visible = false;
+        }
+
+        private void admin_interface_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

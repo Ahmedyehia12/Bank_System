@@ -137,7 +137,7 @@
             // 
             // button6
             // 
-            button6.Location = new Point(3, 3);
+            button6.Location = new Point(12, 12);
             button6.Name = "button6";
             button6.Size = new Size(59, 26);
             button6.TabIndex = 10;
@@ -164,6 +164,7 @@
             Name = "admin_interface";
             RightToLeftLayout = true;
             Text = "Admin Interface";
+            Load += admin_interface_Load;
             ResumeLayout(false);
             PerformLayout();
         }
