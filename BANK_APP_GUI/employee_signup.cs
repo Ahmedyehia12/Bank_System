@@ -16,5 +16,23 @@ namespace BANK_APP_GUI
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Information saved\tEmployee signed-up Successfully");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to leave?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dialogResult == DialogResult.Yes)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
     }
 }

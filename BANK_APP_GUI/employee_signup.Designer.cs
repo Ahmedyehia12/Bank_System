@@ -103,7 +103,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Calibri", 20F, FontStyle.Regular, GraphicsUnit.Pixel);
-            label5.Location = new Point(231, 59);
+            label5.Location = new Point(244, 60);
             label5.Name = "label5";
             label5.Size = new Size(278, 24);
             label5.TabIndex = 7;
@@ -112,22 +112,24 @@
             // button2
             // 
             button2.Font = new Font("Calibri", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            button2.Location = new Point(207, 312);
+            button2.Location = new Point(259, 312);
             button2.Name = "button2";
             button2.Size = new Size(86, 31);
             button2.TabIndex = 12;
             button2.Text = "Back";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // button1
             // 
             button1.Font = new Font("Calibri", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            button1.Location = new Point(445, 312);
+            button1.Location = new Point(423, 312);
             button1.Name = "button1";
             button1.Size = new Size(86, 31);
             button1.TabIndex = 13;
             button1.Text = "Sign-Up";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // employee_signup
             // 
