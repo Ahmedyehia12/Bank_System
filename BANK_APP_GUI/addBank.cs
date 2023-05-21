@@ -31,20 +31,29 @@ namespace BANK_APP_GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
-            
-                bankCode = GetMaxBankCode();
-                string bankNmae = textBox1.Text;
+            if (errorLabel.Visible == false)
+            {
+                int bank_code = GetMaxBankCode();
+                string bankName = textBox1.Text;
                 string bankAddress = textBox2.Text;
                 string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
-                command.CommandText = "INSERT INTO BANK VALUES (" + bankCode + ",'" + bankNmae + "','" + bankAddress + "')";
+                command.CommandText = "INSERT INTO BANK (BANK_CODE, BANK_NAME, BANK_ADDRESS) VALUES (@bank_code, @bank_name, @bank_address)";
+                command.Parameters.AddWithValue("@bank_code", bank_code);
+                command.Parameters.AddWithValue("@bank_name", bankName);
+                command.Parameters.AddWithValue("@bank_address", bankAddress);
                 command.ExecuteNonQuery();
                 connection.Close();
-                MessageBox.Show("Bank Added Successfully!");
-            
+                MessageBox.Show("Bank Added Successfully");
+
+            }
+
+
+
+
+
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -70,7 +79,7 @@ namespace BANK_APP_GUI
             else
             {
                 errorLabel.Visible = false;
-               
+
             }
 
         }
@@ -78,7 +87,7 @@ namespace BANK_APP_GUI
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
             textBox2.Text = ((System.Windows.Forms.TextBox)sender).Text;
-            if(textBox2.Text == "")
+            if (textBox2.Text == "")
             {
                 errorLabel.Text = "Please Enter Bank Address";
                 errorLabel.Visible = true;
@@ -118,6 +127,29 @@ namespace BANK_APP_GUI
         {
             MessageBox.Show("Thank You for using our App!");
             Close();
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            if (errorLabel.Visible == false)
+            {
+                int bank_code = GetMaxBankCode();
+                string bankName = textBox1.Text;
+                string bankAddress = textBox2.Text;
+                string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+                SqlCommand command = connection.CreateCommand();
+                command.CommandText = "INSERT INTO BANK (BANK_CODE, BANK_NAME, BANK_ADDRESS) VALUES (@bank_code, @bank_name, @bank_address)";
+                command.Parameters.AddWithValue("@bank_code", bank_code);
+                command.Parameters.AddWithValue("@bank_name", bankName);
+                command.Parameters.AddWithValue("@bank_address", bankAddress);
+                command.ExecuteNonQuery();
+                connection.Close();
+                MessageBox.Show("Bank Added Successfully");
+
+            }
+
         }
     }
 }

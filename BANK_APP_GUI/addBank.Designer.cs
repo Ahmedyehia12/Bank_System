@@ -32,11 +32,11 @@
             textBox2 = new TextBox();
             label3 = new Label();
             label1 = new Label();
-            button1 = new Button();
             button6 = new Button();
             textBox1 = new TextBox();
             button2 = new Button();
             errorLabel = new Label();
+            button1 = new Button();
             SuspendLayout();
             // 
             // label2
@@ -84,18 +84,6 @@
             label1.TabIndex = 7;
             label1.Text = "Bank Address:";
             // 
-            // button1
-            // 
-            button1.Enabled = false;
-            button1.Location = new Point(400, 496);
-            button1.Margin = new Padding(3, 4, 3, 4);
-            button1.Name = "button1";
-            button1.Size = new Size(102, 31);
-            button1.TabIndex = 8;
-            button1.Text = "Save";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
-            // 
             // button6
             // 
             button6.Location = new Point(14, 16);
@@ -138,17 +126,28 @@
             errorLabel.Size = new Size(0, 23);
             errorLabel.TabIndex = 21;
             // 
+            // button1
+            // 
+            button1.Font = new Font("Segoe UI Emoji", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            button1.Location = new Point(415, 473);
+            button1.Name = "button1";
+            button1.Size = new Size(94, 29);
+            button1.TabIndex = 22;
+            button1.Text = "Save";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click_1;
+            // 
             // addBank
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.DarkSlateGray;
             ClientSize = new Size(914, 600);
+            Controls.Add(button1);
             Controls.Add(errorLabel);
             Controls.Add(button2);
             Controls.Add(textBox1);
             Controls.Add(button6);
-            Controls.Add(button1);
             Controls.Add(label1);
             Controls.Add(label3);
             Controls.Add(textBox2);
@@ -167,10 +166,10 @@
         private TextBox textBox2;
         private Label label3;
         private Label label1;
-        private Button button1;
         private Button button6;
         private TextBox textBox1;
         private Button button2;
         private Label errorLabel;
+        private Button button1;
     }
 }
