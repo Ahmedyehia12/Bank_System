@@ -39,68 +39,68 @@ namespace BANK_APP_GUI
         private void button1_Click(object sender, EventArgs e)
         {
 
-            string name = this.name.Text;
-            string address = this.address.Text;
-            string accountType;
-            if (radioButton1.Checked)
+            if (errorLabel.Visible == false)
             {
-                accountType = "Savings";
-            }
-            else if (radioButton2.Checked)
-            {
-                accountType = "Fixed Deposit";
-            }
-            else
-            {
-                accountType = "Salary";
-            }
-            string phone = this.phone.Text;
-            while (phone.Length != 11)
-            {
-                MessageBox.Show("Invalid Phone Number");
-                phone = this.phone.Text;
-            }
-            string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
-            SqlConnection connection = new SqlConnection(connectionString);
-            connection.Open();
+                string name = this.name.Text;
+                string address = this.address.Text;
+                string accountType;
 
-            SqlCommand commandSSN = connection.CreateCommand();
-            commandSSN.CommandText = "SELECT * FROM CUSTOMER";
-            SqlDataReader reader = commandSSN.ExecuteReader();
-            int SSN = 0;
+                if (radioButton1.Checked)
+                {
+                    accountType = "Savings";
+                }
+                else if (radioButton2.Checked)
+                {
+                    accountType = "Fixed Deposit";
+                }
+                else
+                {
+                    accountType = "Salary";
+                }
+                string phone = this.phone.Text;
 
-            while (reader.Read())
-            {
-                SSN = (int)reader["SSN"];
+                string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+
+                SqlCommand commandSSN = connection.CreateCommand();
+                commandSSN.CommandText = "SELECT * FROM CUSTOMER";
+                SqlDataReader reader = commandSSN.ExecuteReader();
+                int SSN = 0;
+
+                while (reader.Read())
+                {
+                    SSN = (int)reader["SSN"];
+                }
+                SSN++;
+                connection.Close();
+
+                SqlConnection connection2 = new SqlConnection(connectionString);
+                connection2.Open();
+                SqlCommand command = connection2.CreateCommand();
+                command.CommandText = "INSERT INTO CUSTOMER VALUES(@SSN, @CUSTOMER_NAME, @CUSTOMER_ADDRESS, @CUSTOMER_PHONE)";
+                command.Parameters.AddWithValue("@SSN", SSN);
+                command.Parameters.AddWithValue("@CUSTOMER_NAME", name);
+                command.Parameters.AddWithValue("@CUSTOMER_ADDRESS", address);
+                command.Parameters.AddWithValue("@CUSTOMER_PHONE", phone);
+                command.ExecuteNonQuery();
+                connection.Close();
+
+
+                int accountNum = getAccountNum();
+                int balance = 0;
+                SqlConnection connection4 = new SqlConnection(connectionString);
+                connection4.Open();
+                SqlCommand command2 = connection4.CreateCommand();
+                command2.CommandText = "INSERT INTO ACCOUNT VALUES(@ACCOUNT_NUM, @SSN, @BALANCE, @ACCOUNT_TYPE)";
+                command2.Parameters.AddWithValue("@ACCOUNT_NUM", accountNum);
+                command2.Parameters.AddWithValue("@SSN", SSN);
+                command2.Parameters.AddWithValue("@BALANCE", 0.0);
+                command2.Parameters.AddWithValue("@ACCOUNT_TYPE", accountType);
+                command2.ExecuteNonQuery();
+                connection4.Close();
+                MessageBox.Show("Information saved\tCustomer signed-up Successfully");
             }
-            SSN++;
-            connection.Close();
-
-            SqlConnection connection2 = new SqlConnection(connectionString);
-            connection2.Open();
-            SqlCommand command = connection2.CreateCommand();
-            command.CommandText = "INSERT INTO CUSTOMER VALUES(@SSN, @CUSTOMER_NAME, @CUSTOMER_ADDRESS, @CUSTOMER_PHONE)";
-            command.Parameters.AddWithValue("@SSN", SSN);
-            command.Parameters.AddWithValue("@CUSTOMER_NAME", name);
-            command.Parameters.AddWithValue("@CUSTOMER_ADDRESS", address);
-            command.Parameters.AddWithValue("@CUSTOMER_PHONE", phone);
-            command.ExecuteNonQuery();
-            connection.Close();
-
-
-            int accountNum = getAccountNum();
-            int balance = 0;
-            SqlConnection connection4 = new SqlConnection(connectionString);
-            connection4.Open();
-            SqlCommand command2 = connection4.CreateCommand();
-            command2.CommandText = "INSERT INTO ACCOUNT VALUES(@ACCOUNT_NUM, @SSN, @BALANCE, @ACCOUNT_TYPE)";
-            command2.Parameters.AddWithValue("@ACCOUNT_NUM", accountNum);
-            command2.Parameters.AddWithValue("@SSN", SSN);
-            command2.Parameters.AddWithValue("@BALANCE", 0.0);
-            command2.Parameters.AddWithValue("@ACCOUNT_TYPE", accountType);
-            command2.ExecuteNonQuery();
-            connection4.Close();
-            MessageBox.Show("Information saved\tCustomer signed-up Successfully");
         }
         public int getAccountNum()
         {
@@ -123,21 +123,70 @@ namespace BANK_APP_GUI
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            string name = this.name.Text;
+            name.Text = ((System.Windows.Forms.TextBox)sender).Text;
+            if (name.Text == "")
+            {
+                errorLabel.Visible = true;
+                errorLabel.Text = "name is required";
+            }
+            else
+            {
+                errorLabel.Visible = false;
+            }
+
         }
+
+
+
+
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            string address = this.address.Text;
+            address.Text = ((System.Windows.Forms.TextBox)sender).Text;
+            if (address.Text == "")
+            {
+                errorLabel.Visible = true;
+                errorLabel.Text = "Address is Required";
+            }
+            else
+            {
+                errorLabel.Visible = false;
+            }
+
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
-            string phone = this.phone.Text;
-            if (phone.Length != 11)
-            {
+            phone.Text = ((System.Windows.Forms.TextBox)sender).Text;
 
+            if (phone.Text == "")
+            {
+                errorLabel.Visible = true;
+                errorLabel.Text = "Please enter your phone number";
             }
+            else
+            {
+                if (checkPhoneNum(phone.Text) == false)
+                {
+                    errorLabel.Visible = true;
+                    errorLabel.Text = "Please enter a valid phone number";
+                }
+                else
+                {
+                    errorLabel.Visible = false;
+                }
+            }
+
+
+        }
+        public bool checkPhoneNum(string num)
+        {
+            if (num.Length != 11)
+            {
+                return false;
+            }
+            return true;
+
         }
 
         private void button6_Click(object sender, EventArgs e)

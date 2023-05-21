@@ -25,37 +25,41 @@ namespace BANK_APP_GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int ID = Convert.ToInt32(ID_textbox.Text);
-            string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
-            SqlConnection connection = new SqlConnection(connectionString);
-            connection.Open();
-            SqlCommand command = connection.CreateCommand();
-            command.CommandText = "SELECT * FROM EMPLOYEE";
-            SqlDataReader reader = command.ExecuteReader();
-            bool check = false;
-            while (reader.Read())
+            if (errorLabel.Visible == false)
             {
-                if (reader["EMP_ID"].ToString() == ID.ToString())
-                {
-                    check = true;
-                }
-            }
-            if (check == true)
-            {
+                string ID = ID_textbox.Text;
                 employeeInterface employee_interface = new employeeInterface();
                 employee_interface.Show();
                 this.Hide();
             }
-            else
-            {
-                MessageBox.Show("Wrong ID");
-            }
+
+
 
 
         }
 
         private void ID_textbox_TextChanged(object sender, EventArgs e)
         {
+            ID_textbox.Text = ((System.Windows.Forms.TextBox)sender).Text;
+            if (ID_textbox.Text == "")
+            {
+                errorLabel.Text = "Please enter your ID";
+                errorLabel.Visible = true;
+            }
+            else
+            {
+                if (checkId(ID_textbox.Text) == false)
+                {
+                    errorLabel.Text = "ID not found";
+                    errorLabel.Visible = true;
+                }
+                else
+                {
+                    errorLabel.Visible = false;
+                }
+            }
+
+
 
         }
 
@@ -63,7 +67,26 @@ namespace BANK_APP_GUI
         {
             var newframe = new signin();
             newframe.Show();
-            Visible = false;
+            this.Hide();
         }
+        public static bool checkId(string id)
+        {
+            string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
+            SqlConnection connection = new SqlConnection(connectionString);
+            connection.Open();
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = "SELECT * FROM EMPLOYEE";
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                if (reader["EMP_ID"].ToString() == id.ToString())
+                {
+                    return true;
+                }
+            }
+            return false;
+
+        }
+
     }
 }

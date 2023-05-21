@@ -61,37 +61,50 @@ namespace BANK_APP_GUI
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+            customerBranch.Text = ((System.Windows.Forms.TextBox)sender).Text;
+            if (customerBranch.Text == "")
+            {
+                errorLabel.Text = "Please enter your Branch Number";
+                errorLabel.Visible = true;
+            }
+            else
+            {
+                if (!checkCustomerBranch(ssn, customerBranch.Text))
+                {
+                    errorLabel.Text = "Please enter a valid Branch Number";
+                    errorLabel.Visible = true;
+                }
+                else
+                {
+                    errorLabel.Visible = false;
+                }
+
+            }
+
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int emp_id = getEmployeeId();
-            int loan_num = getLoanum();
-            int branch_num = int.Parse(customerBranch.Text);
-            while (!checkCustomerBranch(ssn, branch_num))
+            if (errorLabel.Visible == false)
             {
-                MessageBox.Show("Please enter a valid branch number");
-                return;
+                int emp_id = getEmployeeId();
+                int loan_num = getLoanum();
+                int branch_num = int.Parse(customerBranch.Text);
+                int account_num = int.Parse(customerAccount.Text);
+                int Amount = int.Parse(amount.Text);
+                string loan_type = loanType.Text;
+                insertLoan(loan_num, ssn, branch_num, account_num, emp_id, loan_type, Amount, "PENDING");
+                if (!loanDecision(account_num, loan_num))
+                {
+                    MessageBox.Show("Your loan request has been rejected");
+                    return;
+                }
+                MessageBox.Show("Your loan request has been accepted");
+                customerInterface Customer = new customerInterface(ssn);
+                Customer.Show();
+                this.Hide();
             }
-            int account_num = int.Parse(customerAccount.Text);
-            while (!checkCustomerAccount(ssn, account_num))
-            {
-                MessageBox.Show("Please enter a valid account number");
-                return;
-            }
-            int Amount = int.Parse(amount.Text);
-            string loan_type = loanType.Text;
-            insertLoan(loan_num, ssn, branch_num, account_num, emp_id, loan_type, Amount, "PENDING");
-            if (!loanDecision(account_num, loan_num))
-            {
-                MessageBox.Show("Your loan request has been rejected");
-                return;
-            }
-            MessageBox.Show("Your loan request has been accepted");
-            customerInterface Customer = new customerInterface(ssn);
-            Customer.Show();
-            this.Hide();
         }
         public static void insertLoan(int loan_num, int ssn, int branch_num, int account_num, int emp_id, string loan_type, int Amount, string state)
         {
@@ -179,7 +192,7 @@ namespace BANK_APP_GUI
             connection.Close();
             return 0;
         }
-        public static bool checkCustomerBranch(int ssn, int bnum)
+        public static bool checkCustomerBranch(int ssn, string bnum)
         {
             string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
             SqlConnection connection = new SqlConnection(connectionString);
@@ -198,7 +211,7 @@ namespace BANK_APP_GUI
             return false;
 
         }
-        public static bool checkCustomerAccount(int ssn, int accNum)
+        public static bool checkCustomerAccount(int ssn, string accNum)
         {
             bool check = false;
             string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
@@ -270,6 +283,58 @@ namespace BANK_APP_GUI
             var newframe = new customerSignin();
             newframe.Show();
             Visible = false;
+        }
+
+        private void customerAccount_TextChanged(object sender, EventArgs e)
+        {
+            customerAccount.Text = ((System.Windows.Forms.TextBox)sender).Text;
+            if (customerAccount.Text == "")
+            {
+                errorLabel.Text = "Please enter your account number";
+                errorLabel.Visible = true;
+            }
+            else
+            {
+                if (!checkCustomerAccount(ssn, customerAccount.Text))
+                {
+                    errorLabel.Text = "Please enter a valid account number";
+                    errorLabel.Visible = true;
+                }
+                else
+                {
+                    errorLabel.Visible = false;
+                }
+            }
+        }
+
+        private void loanType_TextChanged(object sender, EventArgs e)
+        {
+            loanType.Text = ((System.Windows.Forms.TextBox)sender).Text;
+            if (loanType.Text == "")
+            {
+                errorLabel.Text = "Please enter your loan type";
+                errorLabel.Visible = true;
+            }
+            else
+            {
+                errorLabel.Visible = false;
+            }
+
+        }
+
+        private void amount_TextChanged(object sender, EventArgs e)
+        {
+            amount.Text = ((System.Windows.Forms.TextBox)sender).Text;
+            if (amount.Text == "")
+            {
+                errorLabel.Text = "Please enter your loan amount";
+                errorLabel.Visible = true;
+            }
+            else
+            {
+                errorLabel.Visible = false;
+            }
+
         }
     }
 }

@@ -17,39 +17,65 @@ namespace BANK_APP_GUI
         {
             InitializeComponent();
         }
-
-        private void button1_Click(object sender, EventArgs e)
+        public static bool checkBranchNum(string bnum)
         {
-            string name = this.name.Text;
-            string branch = this.branchNum.Text;
-            int branch_num = int.Parse(branch);
-            string address = this.Address.Text;
+
             string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
 
-            SqlCommand commandSSN = connection.CreateCommand();
-            commandSSN.CommandText = "SELECT * FROM EMPLOYEE";
-            SqlDataReader reader = commandSSN.ExecuteReader();
-            int EMP_ID = 0;
-
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = "SELECT * FROM BRANCH";
+            SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                EMP_ID = (int)reader["EMP_ID"];
+                if (reader["BRANCH_NUM"].ToString() == bnum.ToString())
+                {
+                    connection.Close();
+                    return true;
+                }
             }
-            EMP_ID++;
             connection.Close();
-            SqlConnection connection2 = new SqlConnection(connectionString);
-            connection2.Open();
-            SqlCommand command = connection2.CreateCommand();
-            command.CommandText = "INSERT INTO EMPLOYEE VALUES(@EMP_ID, @BRANCH_NUM, @EMPLOYEE_NAME, @EMPLOYEE_ADDRESS)";
-            command.Parameters.AddWithValue("@EMP_ID", EMP_ID);
-            command.Parameters.AddWithValue("@BRANCH_NUM", branch_num);
-            command.Parameters.AddWithValue("@EMPLOYEE_NAME", name);
-            command.Parameters.AddWithValue("@EMPLOYEE_ADDRESS", address);
-            command.ExecuteNonQuery();
-            connection.Close();
-            MessageBox.Show("Information saved\tEmployee signed-up Successfully");
+            return false;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (!errorLabel.Visible)
+            {
+
+
+                string name = this.name.Text;
+                string branch = this.branchNum.Text;
+                int branch_num = int.Parse(branch);
+                string address = this.Address.Text;
+                string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+
+                SqlCommand commandSSN = connection.CreateCommand();
+                commandSSN.CommandText = "SELECT * FROM EMPLOYEE";
+                SqlDataReader reader = commandSSN.ExecuteReader();
+                int EMP_ID = 0;
+
+                while (reader.Read())
+                {
+                    EMP_ID = (int)reader["EMP_ID"];
+                }
+                EMP_ID++;
+                connection.Close();
+                SqlConnection connection2 = new SqlConnection(connectionString);
+                connection2.Open();
+                SqlCommand command = connection2.CreateCommand();
+                command.CommandText = "INSERT INTO EMPLOYEE VALUES(@EMP_ID, @BRANCH_NUM, @EMPLOYEE_NAME, @EMPLOYEE_ADDRESS)";
+                command.Parameters.AddWithValue("@EMP_ID", EMP_ID);
+                command.Parameters.AddWithValue("@BRANCH_NUM", branch_num);
+                command.Parameters.AddWithValue("@EMPLOYEE_NAME", name);
+                command.Parameters.AddWithValue("@EMPLOYEE_ADDRESS", address);
+                command.ExecuteNonQuery();
+                connection.Close();
+                MessageBox.Show("Information saved\tEmployee signed-up Successfully");
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -70,6 +96,73 @@ namespace BANK_APP_GUI
             var form = new sign_up();
             form.Show();
             Visible = false;
+
+        }
+
+        private void branchNum_TextChanged(object sender, EventArgs e)
+        {
+            branchNum.Text = ((System.Windows.Forms.TextBox)sender).Text;
+            if (branchNum.Text == "")
+            {
+                errorLabel.Text = "Branch Number is required";
+                errorLabel.Visible = true;
+
+            }
+            else
+            {
+                if (!checkBranchNum(branchNum.Text))
+                {
+                    errorLabel.Text = "Invalid Branch Number";
+                    errorLabel.Visible = true;
+
+                }
+                else
+                {
+                    errorLabel.Visible = false;
+                }
+            }
+
+
+
+
+
+
+
+        }
+
+        private void employee_signup_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void name_TextChanged(object sender, EventArgs e)
+        {
+            name.Text = ((System.Windows.Forms.TextBox)sender).Text;
+            if (name.Text == "")
+            {
+                errorLabel.Text = "Name is required";
+                errorLabel.Visible = true;
+            }
+            else
+            {
+                errorLabel.Visible = false;
+            }
+
+
+        }
+
+        private void Address_TextChanged(object sender, EventArgs e)
+        {
+            Address.Text = ((System.Windows.Forms.TextBox)sender).Text;
+            if (Address.Text == "")
+            {
+                errorLabel.Text = "Address is required";
+                errorLabel.Visible = true;
+            }
+            else
+            {
+                errorLabel.Visible = false;
+            }
 
         }
     }

@@ -31,27 +31,20 @@ namespace BANK_APP_GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            bankCode = GetMaxBankCode();
-            string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                string query = "INSERT INTO BANK (BANK_CODE, BANK_ADDRESS, BANK_NAME)" +
-                               "VALUES (@Code, @Address, @Name)";
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@Code", bankCode);
-                    command.Parameters.AddWithValue("@Name", bankName);
-                    command.Parameters.AddWithValue("@Address", bankAddress);
-
-                    connection.Open();
-
-                    int rows = command.ExecuteNonQuery();
-                    Console.WriteLine($"Rows affected: {rows}");
-                }
-            }
-            textBox1.Clear();
-            textBox2.Clear();
-            MessageBox.Show("Bank Added Successfully!");
+            
+            
+                bankCode = GetMaxBankCode();
+                string bankNmae = textBox1.Text;
+                string bankAddress = textBox2.Text;
+                string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+                SqlCommand command = connection.CreateCommand();
+                command.CommandText = "INSERT INTO BANK VALUES (" + bankCode + ",'" + bankNmae + "','" + bankAddress + "')";
+                command.ExecuteNonQuery();
+                connection.Close();
+                MessageBox.Show("Bank Added Successfully!");
+            
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -68,13 +61,33 @@ namespace BANK_APP_GUI
 
         private void textBox1_TextChanged_1(object sender, EventArgs e)
         {
-            bankName = textBox1.Text;
+            textBox1.Text = ((System.Windows.Forms.TextBox)sender).Text;
+            if (textBox1.Text == "")
+            {
+                errorLabel.Text = "Please Enter Bank Name";
+                errorLabel.Visible = true;
+            }
+            else
+            {
+                errorLabel.Visible = false;
+               
+            }
+
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            bankAddress = textBox2.Text;
-            button1.Enabled = true;
+            textBox2.Text = ((System.Windows.Forms.TextBox)sender).Text;
+            if(textBox2.Text == "")
+            {
+                errorLabel.Text = "Please Enter Bank Address";
+                errorLabel.Visible = true;
+            }
+            else
+            {
+                errorLabel.Visible = false;
+            }
+
         }
 
         private static int GetMaxBankCode()

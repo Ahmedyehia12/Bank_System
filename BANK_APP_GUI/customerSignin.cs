@@ -20,17 +20,15 @@ namespace BANK_APP_GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int ssn = Convert.ToInt32(customerSSN.Text);
-            while (CheckSSN(ssn) == false)
+            if (!errorLabel.Visible)
             {
-                MessageBox.Show("Wrong SSN");
-                ssn = Convert.ToInt32(customerSSN.Text);
+                int ssn = Convert.ToInt32(customerSSN.Text);
+                customerInterface customer_interface = new customerInterface(ssn);
+                customer_interface.Show();
+                this.Hide();
             }
-            customerInterface customer_interface = new customerInterface(ssn);
-            customer_interface.Show();
-            this.Hide();
         }
-        public static bool CheckSSN(int ssn)
+        public static bool CheckSSN(string ssn)
         {
             string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
             SqlConnection connection = new SqlConnection(connectionString);
@@ -50,6 +48,27 @@ namespace BANK_APP_GUI
 
         private void customerSSN_TextChanged(object sender, EventArgs e)
         {
+            customerSSN.Text = ((System.Windows.Forms.TextBox)sender).Text;
+            if (customerSSN.Text == "")
+            {
+                errorLabel.Text = "Please enter your SSN";
+                errorLabel.Visible = true;
+            }
+            else
+            {
+                if (!CheckSSN(customerSSN.Text))
+                {
+                    errorLabel.Text = "Please enter a valid SSN";
+                    errorLabel.Visible = true;
+
+                }
+                else
+                {
+                    errorLabel.Visible = false;
+                }
+
+            }
+
 
         }
 

@@ -33,15 +33,15 @@
             label3 = new Label();
             label1 = new Label();
             button6 = new Button();
+            errorLabel = new Label();
             SuspendLayout();
             // 
             // ID_textbox
             // 
             ID_textbox.BackColor = SystemColors.Control;
-            ID_textbox.Location = new Point(300, 163);
-            ID_textbox.Margin = new Padding(3, 2, 3, 2);
+            ID_textbox.Location = new Point(343, 217);
             ID_textbox.Name = "ID_textbox";
-            ID_textbox.Size = new Size(232, 23);
+            ID_textbox.Size = new Size(265, 27);
             ID_textbox.TabIndex = 1;
             ID_textbox.TextChanged += ID_textbox_TextChanged;
             // 
@@ -50,10 +50,9 @@
             signinButton.BackColor = SystemColors.Control;
             signinButton.Font = new Font("Corbel", 15.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
             signinButton.ForeColor = Color.DarkSlateGray;
-            signinButton.Location = new Point(283, 258);
-            signinButton.Margin = new Padding(3, 2, 3, 2);
+            signinButton.Location = new Point(323, 344);
             signinButton.Name = "signinButton";
-            signinButton.Size = new Size(98, 43);
+            signinButton.Size = new Size(112, 57);
             signinButton.TabIndex = 3;
             signinButton.Text = "Sign in!";
             signinButton.UseVisualStyleBackColor = false;
@@ -65,9 +64,9 @@
             label3.BackColor = Color.DarkSlateGray;
             label3.Font = new Font("Corbel", 27.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
             label3.ForeColor = SystemColors.Control;
-            label3.Location = new Point(224, 35);
+            label3.Location = new Point(256, 47);
             label3.Name = "label3";
-            label3.Size = new Size(260, 45);
+            label3.Size = new Size(329, 58);
             label3.TabIndex = 11;
             label3.Text = "Welcome Back!";
             // 
@@ -76,34 +75,45 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point);
             label1.ForeColor = SystemColors.Control;
-            label1.Location = new Point(124, 156);
+            label1.Location = new Point(142, 208);
             label1.Name = "label1";
-            label1.Size = new Size(149, 30);
+            label1.Size = new Size(192, 37);
             label1.TabIndex = 12;
             label1.Text = "Enter Your ID:";
             // 
             // button6
             // 
-            button6.Location = new Point(12, 12);
+            button6.Location = new Point(14, 16);
+            button6.Margin = new Padding(3, 4, 3, 4);
             button6.Name = "button6";
-            button6.Size = new Size(59, 26);
+            button6.Size = new Size(67, 35);
             button6.TabIndex = 22;
             button6.Text = "<-Back";
             button6.UseVisualStyleBackColor = true;
             button6.Click += button6_Click;
             // 
+            // errorLabel
+            // 
+            errorLabel.AutoSize = true;
+            errorLabel.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
+            errorLabel.ForeColor = Color.Maroon;
+            errorLabel.Location = new Point(323, 422);
+            errorLabel.Name = "errorLabel";
+            errorLabel.Size = new Size(0, 23);
+            errorLabel.TabIndex = 23;
+            // 
             // employee_signin
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.DarkSlateGray;
-            ClientSize = new Size(700, 338);
+            ClientSize = new Size(800, 451);
+            Controls.Add(errorLabel);
             Controls.Add(button6);
             Controls.Add(label1);
             Controls.Add(label3);
             Controls.Add(signinButton);
             Controls.Add(ID_textbox);
-            Margin = new Padding(3, 2, 3, 2);
             Name = "employee_signin";
             Text = "Signin";
             Load += Form1_Load;
@@ -117,5 +127,6 @@
         private Label label3;
         private Label label1;
         private Button button6;
+        private Label errorLabel;
     }
 }

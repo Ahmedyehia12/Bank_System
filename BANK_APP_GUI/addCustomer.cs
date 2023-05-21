@@ -21,30 +21,28 @@ namespace BANK_APP_GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string name = customerName.Text;
-            string address = customerAddress.Text;
-            string phone = customerPhone.Text;
-            string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
-            SqlConnection connection = new SqlConnection(connectionString);
-            int maxSSN = GetMaxSSN(connection);
-            while (phone.Length != 11 || !phone.All(char.IsDigit))
+            if (errorLabel.Visible == false)
             {
-                MessageBox.Show("Please Enter a Valid Phone Number");
-                phone = customerPhone.Text;
+                string name = customerName.Text;
+                string address = customerAddress.Text;
+                string phone = customerPhone.Text;
+                string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
+                SqlConnection connection = new SqlConnection(connectionString);
+                int maxSSN = GetMaxSSN(connection);
+                connection.Open();
+                SqlCommand command = connection.CreateCommand();
+                command.CommandText = "INSERT INTO CUSTOMER (SSN, CUSTOMER_NAME, CUSTOMER_PHONE, CUSTOMER_ADDRESS) VALUES (@SSN, @CUSTOMER_NAME, @CUSTOMER_PHONE, @CUSTOMER_ADDRESS)";
+                command.Parameters.AddWithValue("@SSN", maxSSN);
+                command.Parameters.AddWithValue("@CUSTOMER_NAME", name);
+                command.Parameters.AddWithValue("@CUSTOMER_PHONE", phone);
+                command.Parameters.AddWithValue("@CUSTOMER_ADDRESS", address);
+                command.ExecuteNonQuery();
+                connection.Close();
+                MessageBox.Show("Customer Added Successfully");
+                employeeInterface employee = new employeeInterface();
+                employee.Show();
+                this.Hide();
             }
-            connection.Open();
-            SqlCommand command = connection.CreateCommand();
-            command.CommandText = "INSERT INTO CUSTOMER (SSN, CUSTOMER_NAME, CUSTOMER_PHONE, CUSTOMER_ADDRESS) VALUES (@SSN, @CUSTOMER_NAME, @CUSTOMER_PHONE, @CUSTOMER_ADDRESS)";
-            command.Parameters.AddWithValue("@SSN", maxSSN);
-            command.Parameters.AddWithValue("@CUSTOMER_NAME", name);
-            command.Parameters.AddWithValue("@CUSTOMER_PHONE", phone);
-            command.Parameters.AddWithValue("@CUSTOMER_ADDRESS", address);
-            command.ExecuteNonQuery();
-            connection.Close();
-            MessageBox.Show("Customer Added Successfully");
-            employeeInterface employee = new employeeInterface();
-            employee.Show();
-            this.Hide();
         }
         public static int GetMaxSSN(SqlConnection connection)
         {
@@ -79,6 +77,59 @@ namespace BANK_APP_GUI
         {
             MessageBox.Show("Thank You for using our App!");
             Close();
+        }
+
+        private void customerName_TextChanged(object sender, EventArgs e)
+        {
+            customerName.Text = ((System.Windows.Forms.TextBox)sender).Text;
+            if (customerName.Text == "")
+            {
+                errorLabel.Text = "Please enter your Name";
+                errorLabel.Visible = true;
+            }
+            else
+            {
+                errorLabel.Visible = false;
+            }
+        }
+
+        private void customerPhone_TextChanged(object sender, EventArgs e)
+        {
+            customerPhone.Text = ((System.Windows.Forms.TextBox)sender).Text;
+            if (customerPhone.Text == "")
+            {
+                errorLabel.Text = "Please enter your Phone Number";
+                errorLabel.Visible = true;
+            }
+            else
+            {
+                if (customerPhone.Text.Length != 11)
+                {
+                    errorLabel.Text = "Please enter a valid Phone Number";
+                    errorLabel.Visible = true;
+                }
+                else
+                {
+                    errorLabel.Visible = false;
+                }
+
+            }
+
+        }
+
+        private void customerAddress_TextChanged(object sender, EventArgs e)
+        {
+            customerAddress.Text = ((System.Windows.Forms.TextBox)sender).Text;
+            if (customerAddress.Text == "")
+            {
+                errorLabel.Text = "Please enter your Address";
+                errorLabel.Visible = true;
+            }
+            else
+            {
+                errorLabel.Visible = false;
+            }
+
         }
     }
 }
