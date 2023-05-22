@@ -85,7 +85,7 @@ namespace BANK_APP_GUI
         }
         public bool isAllFilled()
         {
-            if (customerBranch.Text == "" || customerAccount.Text == "" || amount.Text == "" || loanType.Text == "")
+            if (customerBranch.Text == "" || customerAccount.Text == "" || amount.Text == "" || loanType.Text == "" ||!checkCustomerAccount(ssn , customerAccount.Text) || !checkCustomerBranch(ssn ,customerBranch.Text))
             {
                 return false;
             }
@@ -118,7 +118,7 @@ namespace BANK_APP_GUI
             }
             else
             {
-                errorLabel.Text = "Please fill all the fields";
+                errorLabel.Text = "Please fill all the fields & make sure account num and branch num are correct";
                 errorLabel.Visible = true;
 
             }

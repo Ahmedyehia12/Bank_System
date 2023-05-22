@@ -19,7 +19,7 @@ namespace BANK_APP_GUI
         }
         public bool isAllFilled()
         {
-            if (customerSSN.Text == "" || newName.Text == "" || customerAddress.Text == "" || customerPhone.Text == "")
+            if (customerSSN.Text == "" || newName.Text == "" || customerAddress.Text == "" || customerPhone.Text == "" || !CheckSSN(customerSSN.Text))
             {
                 return false;
             }
@@ -37,11 +37,6 @@ namespace BANK_APP_GUI
                 string name = newName.Text;
                 string address = customerAddress.Text;
                 string phone = customerPhone.Text;
-                while (phone.Length != 11)
-                {
-                    MessageBox.Show("Wrong Phone Number");
-                    phone = customerPhone.Text;
-                }
                 string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
@@ -61,7 +56,7 @@ namespace BANK_APP_GUI
             }
             else
             {
-                errorLabel.Text = "Please fill all the fields";
+                errorLabel.Text = "Please fill all the fields accurately& check SSN";
                 errorLabel.Visible = true;
             }
         }

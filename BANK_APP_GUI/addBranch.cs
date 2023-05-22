@@ -65,7 +65,7 @@ namespace BANK_APP_GUI
         }
         public bool isAllFilled()
         {
-            if (textBox2.Text == "" || numericUpDown1.Value == 0)
+            if (textBox2.Text == "" || numericUpDown1.Value == 0 || !checkBankCode(numericUpDown1.Value.ToString()))
             {
                 return false;
             }
@@ -101,7 +101,7 @@ namespace BANK_APP_GUI
             }
             else
             {
-                errorLabel.Text = "Please Fill All Fields";
+                errorLabel.Text = "Please Fill All Fields Accurately & Check Bank Code";
                 errorLabel.Visible = true;
 
             }
