@@ -194,7 +194,7 @@
             // 
             errorLabel.AutoSize = true;
             errorLabel.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point);
-            errorLabel.ForeColor = Color.Red;
+            errorLabel.ForeColor = Color.Maroon;
             errorLabel.Location = new Point(375, 555);
             errorLabel.Name = "errorLabel";
             errorLabel.Size = new Size(0, 23);
@@ -223,6 +223,7 @@
             Margin = new Padding(3, 4, 3, 4);
             Name = "customer_signup";
             Text = "Customer Sign-Up";
+            Load += customer_signup_Load;
             ResumeLayout(false);
             PerformLayout();
         }
