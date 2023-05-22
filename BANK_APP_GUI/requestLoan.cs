@@ -83,21 +83,10 @@ namespace BANK_APP_GUI
 
 
         }
-        public bool isAllFilled()
-        {
-            if (customerBranch.Text == "" || customerAccount.Text == "" || amount.Text == "" || loanType.Text == "")
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
 
-        }
         private void button1_Click(object sender, EventArgs e)
         {
-            if (errorLabel.Visible == false && isAllFilled())
+            if (errorLabel.Visible == false)
             {
                 int emp_id = getEmployeeId();
                 int loan_num = getLoanum();
@@ -115,12 +104,6 @@ namespace BANK_APP_GUI
                 customerInterface Customer = new customerInterface(ssn);
                 Customer.Show();
                 this.Hide();
-            }
-            else
-            {
-                errorLabel.Text = "Please fill all the fields";
-                errorLabel.Visible = true;
-
             }
         }
         public static void insertLoan(int loan_num, int ssn, int branch_num, int account_num, int emp_id, string loan_type, int Amount, string state)

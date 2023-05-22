@@ -25,86 +25,33 @@ namespace BANK_APP_GUI
         {
 
         }
-        public bool checkBankCode(string code)
-        {
-            string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
-            SqlConnection connection = new SqlConnection(connectionString);
-            connection.Open();
-            SqlCommand command = connection.CreateCommand();
-            command.CommandText = "SELECT BANK_CODE FROM BANK WHERE BANK_CODE = @bank_code";
-            command.Parameters.AddWithValue("@bank_code", code);
-            SqlDataReader reader = command.ExecuteReader();
-            if (reader.Read())
-            {
-                reader.Close();
-                connection.Close();
-                return true;
-            }
-            else
-            {
-                reader.Close();
-                connection.Close();
-                return false;
-            }
-
-        }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            textBox2.Text = ((System.Windows.Forms.TextBox)sender).Text;
-            if (textBox2.Text == "")
-            {
-                errorLabel.Text = "Please Enter Branch Address";
-                errorLabel.Visible = true;
-            }
-            else
-            {
-                errorLabel.Visible = false;
-            }
-
-        }
-        public bool isAllFilled()
-        {
-            if (textBox2.Text == "" || numericUpDown1.Value == 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-
+            branchAddress = textBox2.Text;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (errorLabel.Visible == false && isAllFilled())
-            {
-                string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
-                SqlConnection connection = new SqlConnection(connectionString);
+            string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
+            SqlConnection connection = new SqlConnection(connectionString);
 
-                int branchNum = getBranchNum();
-                int bankCode = Convert.ToInt32(numericUpDown1.Value);
-                string branchAddress = textBox2.Text;
+            int branchNum = getBranchNum();
 
-                connection.Open();
+            connection.Open();
 
-                SqlCommand command = connection.CreateCommand();
-                command.CommandText = "INSERT INTO BRANCH (BANK_CODE, BRANCH_NUM, BRANCH_ADDRESS) " +
-                    "VALUES (@BANK_CODE, @BRANCH_NUM, @BRANCH_ADDRESS)";
-                command.Parameters.AddWithValue("@BANK_CODE", bankCode);
-                command.Parameters.AddWithValue("@BRANCH_NUM", branchNum);
-                command.Parameters.AddWithValue("@BRANCH_ADDRESS", branchAddress);
-                command.ExecuteNonQuery();
-                connection.Close();
-                MessageBox.Show("Branch Added Successfully!");
-            }
-            else
-            {
-                errorLabel.Text = "Please Fill All Fields";
-                errorLabel.Visible = true;
+            SqlCommand command = connection.CreateCommand();
+            command.CommandText = "INSERT INTO BRANCH (BANK_CODE, BRANCH_NUM, BRANCH_ADDRESS) " +
+                "VALUES (@BANK_CODE, @BRANCH_NUM, @BRANCH_ADDRESS)";
+            command.Parameters.AddWithValue("@BANK_CODE", bankCode);
+            command.Parameters.AddWithValue("@BRANCH_NUM", branchNum);
+            command.Parameters.AddWithValue("@BRANCH_ADDRESS", branchAddress);
 
-            }
+            command.ExecuteNonQuery();
+            connection.Close();
+            numericUpDown1.ResetText();
+            textBox2.Clear();
+            MessageBox.Show("Branch Added Successfully!");
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -116,16 +63,7 @@ namespace BANK_APP_GUI
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            if (!checkBankCode(numericUpDown1.Value.ToString()))
-            {
-                errorLabel.Text = "Bank Code Doesn't Exist";
-                errorLabel.Visible = true;
-            }
-            else
-            {
-                errorLabel.Visible = false;
-            }
-
+            bankCode = (int)numericUpDown1.Value;
         }
 
         public static int getBranchNum()

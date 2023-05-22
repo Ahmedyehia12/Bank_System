@@ -39,7 +39,7 @@ namespace BANK_APP_GUI
         private void button1_Click(object sender, EventArgs e)
         {
 
-            if (errorLabel.Visible == false && isAllFilled())
+            if (errorLabel.Visible == false)
             {
                 string name = this.name.Text;
                 string address = this.address.Text;
@@ -60,19 +60,31 @@ namespace BANK_APP_GUI
                 string phone = this.phone.Text;
 
                 string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
-                 
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+
+                SqlCommand commandSSN = connection.CreateCommand();
+                commandSSN.CommandText = "SELECT * FROM CUSTOMER";
+                SqlDataReader reader = commandSSN.ExecuteReader();
+                int SSN = 0;
+
+                while (reader.Read())
+                {
+                    SSN = (int)reader["SSN"];
+                }
+                SSN++;
+                connection.Close();
 
                 SqlConnection connection2 = new SqlConnection(connectionString);
                 connection2.Open();
                 SqlCommand command = connection2.CreateCommand();
-                int SSN = getMaxSSN();
                 command.CommandText = "INSERT INTO CUSTOMER VALUES(@SSN, @CUSTOMER_NAME, @CUSTOMER_ADDRESS, @CUSTOMER_PHONE)";
                 command.Parameters.AddWithValue("@SSN", SSN);
                 command.Parameters.AddWithValue("@CUSTOMER_NAME", name);
                 command.Parameters.AddWithValue("@CUSTOMER_ADDRESS", address);
                 command.Parameters.AddWithValue("@CUSTOMER_PHONE", phone);
                 command.ExecuteNonQuery();
-                connection2.Close();
+                connection.Close();
 
 
                 int accountNum = getAccountNum();
@@ -89,33 +101,6 @@ namespace BANK_APP_GUI
                 connection4.Close();
                 MessageBox.Show("Information saved\tCustomer signed-up Successfully");
             }
-            else
-            {
-
-
-                errorLabel.Text = "Please fill all the required fields Accurately";
-                errorLabel.Visible = true;
-                
-                
-            }
-        }
-        public int getMaxSSN()
-        {
-            string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
-            // select max
-            SqlConnection connection = new SqlConnection(connectionString);
-            connection.Open();
-            SqlCommand command = connection.CreateCommand();
-            command.CommandText = "SELECT MAX(SSN) FROM CUSTOMER";
-            SqlDataReader reader = command.ExecuteReader();
-            int ssn = 0;
-            if(reader.Read())
-            {
-                ssn = (int)reader[0];
-            }
-            ssn++;
-            connection.Close();
-            return ssn;
         }
         public int getAccountNum()
         {
@@ -196,13 +181,6 @@ namespace BANK_APP_GUI
         }
         public bool checkPhoneNum(string num)
         {
-            for(int i = 0; i < num.Length; i++)
-            {
-                if (num[i] < '0' || num[i] > '9')
-                {
-                    return false;
-                }
-            }
             if (num.Length != 11)
             {
                 return false;
@@ -216,21 +194,6 @@ namespace BANK_APP_GUI
             var newframe = new sign_up();
             newframe.Show();
             Visible = false;
-        }
-        public bool isAllFilled()
-        {
-            if (name.Text == "" || address.Text == "" || phone.Text == "")
-            {
-                return false;
-            }
-            return true;
-
-        }
-
-        private void customer_signup_Load(object sender, EventArgs e)
-        {
-       
-
         }
     }
 }

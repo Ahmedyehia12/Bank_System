@@ -17,21 +17,10 @@ namespace BANK_APP_GUI
         {
             InitializeComponent();
         }
-        public bool isAllFilled()
-        {
-            if (customerSSN.Text == "" || newName.Text == "" || customerAddress.Text == "" || customerPhone.Text == "")
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (!errorLabel.Visible && isAllFilled())
+            if (!errorLabel.Visible)
             {
                 int ssn = Convert.ToInt32(customerSSN.Text);
                 string name = newName.Text;
@@ -58,11 +47,6 @@ namespace BANK_APP_GUI
                 employee.Show();
                 this.Hide();
 
-            }
-            else
-            {
-                errorLabel.Text = "Please fill all the fields";
-                errorLabel.Visible = true;
             }
         }
         public static bool CheckSSN(string ssn)
@@ -153,20 +137,9 @@ namespace BANK_APP_GUI
                 errorLabel.Text = "Please enter your phone number";
                 errorLabel.Visible = true;
             }
-          
-
             else
             {
-                bool check = false;
-                for (int i = 0; i < customerPhone.Text.Length; i++)
-                {
-                    if (customerPhone.Text[i] < '0' || customerPhone.Text[i] > '9')
-                    {
-                        check = true;
-                        break;
-                    }
-                }
-                if (customerPhone.Text.Length != 11 || check)
+                if (customerPhone.Text.Length != 11)
                 {
                     errorLabel.Text = "Please enter a valid phone number";
                     errorLabel.Visible = true;

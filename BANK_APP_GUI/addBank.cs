@@ -55,7 +55,6 @@ namespace BANK_APP_GUI
 
 
         }
-     
 
         private void button6_Click(object sender, EventArgs e)
         {
@@ -129,19 +128,10 @@ namespace BANK_APP_GUI
             MessageBox.Show("Thank You for using our App!");
             Close();
         }
-        public bool isAllFilled()
-        {
-            if (textBox1.Text == "" || textBox2.Text == "")
-            {
-                return false;
-            }
-            return true;
-
-        }
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            if (errorLabel.Visible == false && isAllFilled())
+            if (errorLabel.Visible == false)
             {
                 int bank_code = GetMaxBankCode();
                 string bankName = textBox1.Text;
@@ -157,13 +147,6 @@ namespace BANK_APP_GUI
                 command.ExecuteNonQuery();
                 connection.Close();
                 MessageBox.Show("Bank Added Successfully");
-
-            }
-            else
-            {
-               errorLabel.Text = "Please Fill All Fields";
-                errorLabel.Visible = true;
-
 
             }
 

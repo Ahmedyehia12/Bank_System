@@ -38,21 +38,10 @@ namespace BANK_APP_GUI
             connection.Close();
             return false;
         }
-        public bool isAllFilled()
-        {
-            if (name.Text == "" || branchNum.Text == "" || Address.Text == "")
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (!errorLabel.Visible && isAllFilled())
+            if (!errorLabel.Visible)
             {
 
 
@@ -86,12 +75,6 @@ namespace BANK_APP_GUI
                 command.ExecuteNonQuery();
                 connection.Close();
                 MessageBox.Show("Information saved\tEmployee signed-up Successfully");
-            }
-            else
-            {
-                errorLabel.Text = "Please fill all the required fields";
-                errorLabel.Visible = true;
-
             }
         }
 
