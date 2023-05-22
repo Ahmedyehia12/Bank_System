@@ -18,10 +18,22 @@ namespace BANK_APP_GUI
         {
             InitializeComponent();
         }
+        public bool isAllFilled()
+        {
+            if (customerName.Text == "" || customerAddress.Text == "" || customerPhone.Text == "")
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (errorLabel.Visible == false)
+            if (errorLabel.Visible == false && isAllFilled())
             {
                 string name = customerName.Text;
                 string address = customerAddress.Text;
@@ -42,6 +54,13 @@ namespace BANK_APP_GUI
                 employeeInterface employee = new employeeInterface();
                 employee.Show();
                 this.Hide();
+            
+           }
+            else
+            {
+                errorLabel.Text = "Please fill all the fields";
+                errorLabel.Visible = true;
+
             }
         }
         public static int GetMaxSSN(SqlConnection connection)
@@ -103,7 +122,16 @@ namespace BANK_APP_GUI
             }
             else
             {
-                if (customerPhone.Text.Length != 11)
+                bool check = false;
+                for(int i = 0; i < customerPhone.Text.Length; i++)
+                {
+                    if (customerPhone.Text[i] < '0' || customerPhone.Text[i] > '9')
+                    {
+                        check = true;
+                        break;
+                    }
+                }
+                if (customerPhone.Text.Length != 11 || check)
                 {
                     errorLabel.Text = "Please enter a valid Phone Number";
                     errorLabel.Visible = true;
