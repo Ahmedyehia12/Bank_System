@@ -97,7 +97,7 @@ namespace BANK_APP_GUI
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            if (errorLabel.Visible == false && isAllFilled())
+            if (errorLabel.Visible == false && isAllFilled() && checkCustomerAccount(ssn , customerAccount.Text) && checkCustomerBranch(ssn , customerBranch.Text))
             {
                 int emp_id = getEmployeeId();
                 int loan_num = getLoanum();

@@ -31,7 +31,7 @@ namespace BANK_APP_GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (!errorLabel.Visible && isAllFilled())
+            if (!errorLabel.Visible && isAllFilled()&&CheckSSN(customerSSN.Text)&&CheckPhone(customerPhone.Text))
             {
                 int ssn = Convert.ToInt32(customerSSN.Text);
                 string name = newName.Text;
@@ -56,7 +56,7 @@ namespace BANK_APP_GUI
             }
             else
             {
-                errorLabel.Text = "Please fill all the fields accurately& check SSN";
+                errorLabel.Text = "Please fill all the fields accurately& check any Invalid Data";
                 errorLabel.Visible = true;
             }
         }
@@ -138,6 +138,21 @@ namespace BANK_APP_GUI
                 errorLabel.Visible = false;
             }
 
+        }
+        public static bool CheckPhone(string phone)
+        {
+            for (int i = 0; i < phone.Length; i++)
+            {
+                if (phone[i] < '0' || phone[i] > '9')
+                {
+                    return false;
+                }
+            }
+            if (phone.Length != 11)
+            {
+                return false;
+            }
+            return true;
         }
 
         private void customerPhone_TextChanged(object sender, EventArgs e)

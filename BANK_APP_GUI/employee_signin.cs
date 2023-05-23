@@ -25,16 +25,32 @@ namespace BANK_APP_GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (errorLabel.Visible == false)
+            if (errorLabel.Visible == false && isAllFilled() && checkId(ID_textbox.Text))
             {
                 string ID = ID_textbox.Text;
                 employeeInterface employee_interface = new employeeInterface();
                 employee_interface.Show();
                 this.Hide();
             }
+            else
+            {
+                errorLabel.Text = "Please enter Valid ID";
+                errorLabel.Visible = true;
+
+            }
 
 
 
+
+        }
+        public bool isAllFilled()
+        {
+            if(ID_textbox.Text == "")
+            {
+                return false;
+
+            }
+            return true;
 
         }
 

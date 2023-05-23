@@ -52,7 +52,7 @@ namespace BANK_APP_GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (!errorLabel.Visible && isAllFilled())
+            if (!errorLabel.Visible && isAllFilled() && checkBranchNum(branchNum.Text))
             {
 
 
@@ -89,7 +89,7 @@ namespace BANK_APP_GUI
             }
             else
             {
-                errorLabel.Text = "Please fill all the required fields";
+                errorLabel.Text = "Please fill all the required fields & Enter valid Branch Number";
                 errorLabel.Visible = true;
 
             }

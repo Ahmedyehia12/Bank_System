@@ -78,7 +78,7 @@ namespace BANK_APP_GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (errorLabel.Visible == false && isAllFilled())
+            if (errorLabel.Visible == false && isAllFilled() && checkBankCode(numericUpDown1.Value.ToString()))
             {
                 string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
                 SqlConnection connection = new SqlConnection(connectionString);

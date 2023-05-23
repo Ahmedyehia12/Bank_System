@@ -30,10 +30,29 @@ namespace BANK_APP_GUI
             }
 
         }
+        public bool checkPhoneNum(string phone)
+        {
+            if (phone.Length != 11)
+            {
+                return false;
+            }
+            else
+            {
+                for(int i = 0; i < phone.Length; i++)
+                {
+                    if (phone[i] < '0' || phone[i] > '9')
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+         
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (errorLabel.Visible == false && isAllFilled())
+            if (errorLabel.Visible == false && isAllFilled() && checkPhoneNum(customerPhone.Text))
             {
                 string name = customerName.Text;
                 string address = customerAddress.Text;
@@ -58,7 +77,7 @@ namespace BANK_APP_GUI
            }
             else
             {
-                errorLabel.Text = "Please fill all the fields";
+                errorLabel.Text = "Please fill all the fields & Check any Invalid Data";
                 errorLabel.Visible = true;
 
             }

@@ -39,7 +39,7 @@ namespace BANK_APP_GUI
         private void button1_Click(object sender, EventArgs e)
         {
 
-            if (errorLabel.Visible == false && isAllFilled())
+            if (errorLabel.Visible == false && isAllFilled() &&  checkPhoneNum(phone.Text))
             {
                 string name = this.name.Text;
                 string address = this.address.Text;
@@ -93,16 +93,16 @@ namespace BANK_APP_GUI
             {
 
 
-                errorLabel.Text = "Please fill all the required fields Accurately";
+                errorLabel.Text = "Please fill all the required fields Accurately & check any Invalid Data";
                 errorLabel.Visible = true;
                 
                 
             }
         }
+      
         public int getMaxSSN()
         {
             string connectionString = @"Data Source=" + @"ahmedyehia.database.windows.net;Initial Catalog= BANKAPP ;Persist Security Info=True;User ID= admon;Password= 12345678AB_";
-            // select max
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
             SqlCommand command = connection.CreateCommand();
@@ -123,13 +123,13 @@ namespace BANK_APP_GUI
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
             SqlCommand command = connection.CreateCommand();
-            command.CommandText = "SELECT * FROM ACCOUNT";
+            command.CommandText  = "SELECT MAX(ACCOUNT_NUM) FROM ACCOUNT";
             SqlDataReader reader = command.ExecuteReader();
             int accountNum = 0;
-            while (reader.Read())
+            if(reader.Read())
             {
-                accountNum = (int)reader["ACCOUNT_NUM"];
-            }
+                accountNum = (int)reader[0];
+            }   
             accountNum++;
             connection.Close();
             return accountNum;

@@ -17,15 +17,27 @@ namespace BANK_APP_GUI
         {
             InitializeComponent();
         }
-
+          public bool isAllFilled()
+        {
+            if (customerSSN.Text == "")
+            {
+                return false;
+            }
+            return true;
+        }
         private void button1_Click(object sender, EventArgs e)
         {
-            if (!errorLabel.Visible)
+            if (!errorLabel.Visible &&  isAllFilled() && CheckSSN(customerSSN.Text))
             {
                 int ssn = Convert.ToInt32(customerSSN.Text);
                 customerInterface customer_interface = new customerInterface(ssn);
                 customer_interface.Show();
                 this.Hide();
+            }
+            else
+            {
+                errorLabel.Text = "Please enter Valid SSN";
+                errorLabel.Visible = true;
             }
         }
         public static bool CheckSSN(string ssn)
